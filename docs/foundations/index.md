@@ -7,7 +7,7 @@
 ## Topics
 
 ### [3D Representations](3d-representations.md)
-3D 表征方法概述：Mesh、SDF、NeRF、3D Gaussian Splatting、Triplane。每种表示的原理、数据结构、优劣与适用场景。
+3D 几何与渲染表征方法：Mesh、SDF、NeRF、3D Gaussian Splatting、Triplane。每种表示的原理、数据结构、优劣与适用场景。
 
 ### [SDS (Score Distillation Sampling)](sds.md)
 分数蒸馏采样——用预训练的 2D 扩散模型指导 3D 生成的技术原理。包括 DreamFusion 的设计思路，以及 VSD、CSD、ESD 等后续改进。

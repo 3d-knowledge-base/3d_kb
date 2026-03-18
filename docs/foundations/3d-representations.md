@@ -1,6 +1,9 @@
 # 3D Representations
 
-3D 视觉生成与编辑的第一步是选择合适的 3D 表征方法。不同的表征决定了模型的生成方式、渲染效率和编辑灵活性。本文梳理当前主流的五种 3D 表示。
+3D 视觉生成与编辑的第一步是选择合适的 3D 表征方法。不同的表征决定了模型的生成方式、渲染效率和编辑灵活性。本文梳理当前主流的五种 3D 几何/渲染表示。
+
+!!! note "关于隐空间表征"
+    生成模型中使用的 latent space representations（VecSet、SLAT、O-Voxel 等）属于不同层面的问题——它们关注如何将 3D 数据压缩为适合生成建模的中间表示，详见 [3D Latent Space Representations](../generation/latent-space-representations.md)。
 
 ---
 
@@ -207,94 +210,6 @@ $$
 ### 典型应用
 
 EG3D、LRM 等生成模型广泛使用 Triplane 作为中间表示。在 TRELLIS 中，Triplane 是 SLAT 解码为 3D 输出的核心路径之一。
-
----
-
-## 6. Latent Representations for Mesh Generation
-
-如果说前面的 Mesh / SDF / NeRF / 3DGS / Triplane 是**最终输出表示**或**直接可渲染表示**，那么近两年 mesh 生成里更关键的一条线其实是：
-
-> 如何设计一个既适合 Transformer/Flow/Diffusion 建模、又能保留 3D 几何结构的 **latent representation**。
-
-这条线决定了模型能否同时做到：
-
-- token 足够少，训练可扩展；
-- 几何足够强，重建和生成不糊；
-- 空间语义足够明确，能做局部控制和 test-time scaling；
-- 最终能稳定解码回 mesh。
-
-### 发展脉络
-
-| 方法 | 代表论文 | 核心表示 | 优势 | 主要问题 |
-|:-----|:---------|:---------|:-----|:---------|
-| **VecSet** | 3DShape2VecSet | 固定长度 latent vector set | 紧凑、Transformer 友好、适合 latent diffusion | 空间位置是隐式的，不够 localizable |
-| **SLAT** | TRELLIS | 稀疏体素位置 + 每个位置一个局部 latent | 显式空间锚点，结构/细节解耦，便于编辑 | token 仍偏多，仍受 field/isosurface 路线约束 |
-| **O-Voxel** | TRELLIS 2 | 原生结构化 3D latent | 支持开放表面、非流形、原生 PBR，压缩率更高 | 体系更复杂，训练/解码实现门槛更高 |
-| **VoxSet** | LATTICE | coarse voxel anchors + 紧凑 latent set | 兼顾 VecSet 紧凑性与 sparse voxel 可定位性，支持 test-time scaling | 仍然不是最终 mesh-native 表示 |
-| **Sparse volumetric latent** | SparseFlex / Direct3D-S2 | 高分辨率 sparse SDF / sparse isosurface latent | 高分辨率、复杂拓扑、工程可扩展 | 仍需在 field / isosurface 世界里做解码 |
-| **Mesh-native token** | MeshAnything V2 / BPT / FACE | 直接对 mesh 序列建模 | 原生 mesh 友好，避免“先场后网格” | 序列建模仍受拓扑复杂度影响 |
-
-### 主要观察
-
-#### 1. 从"能压缩"到"可定位"
-
-[3DShape2VecSet](../generation/latent-space-representations.md) 首先证明了：3D shape 可以被压缩为一组固定长度 latent vectors，且这组 vectors 适合 Transformer 和 diffusion 建模。
-
-然而后续研究发现，**紧凑**不等于**易于生成**。当 token 缺少明确的空间锚点时，模型在生成阶段更难确定"几何细节应放置在何处"。
-
-[TRELLIS](../generation/trellis.md) 提出的 SLAT 正是对此问题的回应：
-
-- `{p_i}` 提供显式稀疏结构；
-- `{z_i}` 负责局部几何/外观细节；
-- 表示从"纯 latent set"升级为"带位置的 structured latent"。
-
-#### 2. 从"结构化"到"原生 3D 化"
-
-TRELLIS 将 latent 锚定到空间上，但仍沿用 SDF / isosurface 范式。`TRELLIS 2` 进一步提出 **O-Voxel**：
-
-- 不再仅将 3D 几何视为一个待抽壳的场；
-- 而是直接在结构化 3D 单元中编码几何和材质；
-- 目标是更自然地处理开放表面、非流形和原生 PBR。
-
-这一步的意义在于：latent 不只是"有结构"，而是开始更接近 **native 3D asset representation**。
-
-#### 3. "localizable code" 比 "local feature" 更重要
-
-[LATTICE / VoxSet](../generation/lattice.md) 提出的关键观点是：
-
-> 重要的不是 local vs global，而是 latent code 是否 **localizable**。
-
-具体而言，VecSet 的问题不仅是"太全局"，而是 token 缺少明确位置语义；Sparse voxel 的优势也不仅是"更局部"，而是它具有天然的空间 anchor。
-
-VoxSet 的设计意义在于：
-
-- 保留 set-based latent 的紧凑性；
-- 同时引入 voxel anchors，提供位置引导；
-- 因而支持更自然的 test-time token scaling。
-
-#### 4. 平行路线：直接把 mesh 本身当作第一性对象
-
-另一条平行路线不再纠结 latent field，而是提出：
-
-> 如果最终目标就是高质量 mesh，为什么不直接建模 mesh 序列本身？
-
-这条路线上有三项相关工作：
-
-- **MeshAnything V2**：AMT，相邻面尽量共享边，减少重复顶点 token；
-- **[BPT](../generation/bpt.md)**：Blocked + Patchified Tokenization，把序列压到约 `0.26`；
-- **[FACE](../generation/face.md)**：one-face-one-token，把建模单元直接提升到 triangle face，压缩比达到 `0.11`。
-
-这条路线的意义在于：它不再满足于"先生成一个 field，再转 mesh"，而是将 mesh generation 本身原生化。
-
-### 总结
-
-当前 mesh generation 中的 3D latent / token 表征，需要在三个维度之间做取舍：
-
-1. **Compactness**：token 足够少，训练可扩展。
-2. **Localizability**：token 能对应明确的空间位置。
-3. **Native-ness**：表示尽量接近真实 3D 资产，减少对后处理转换的依赖。
-
-VecSet 更偏 compactness，SLAT 更偏 localizability，O-Voxel 更偏 native-ness，VoxSet 是三者的折中方案，而 BPT / FACE 代表的是 mesh-native 路线的另一端。
 
 ---
 
