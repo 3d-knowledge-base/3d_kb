@@ -2,7 +2,7 @@
 
 > *TripoSG: High-Fidelity 3D Shape Synthesis using Large-Scale Rectified Flow Models*
 
-TripoSG 不是单纯“又一个单图到 3D 模型”，而是一套非常系统化的 3D 生成放大方案：高质量数据构建、强几何 VAE、Rectified Flow Transformer、以及进一步的模型 scaling。
+TripoSG 并非单纯的单图到 3D 生成模型，而是一套系统化的 3D 生成方案：高质量数据构建、强几何 VAE、Rectified Flow Transformer、以及进一步的模型 scaling。
 
 ---
 

@@ -58,7 +58,7 @@ Direct3D-S2 适合放在这条线上理解：
 
 ## 为什么值得关注
 
-虽然 Direct3D-S2 不一定像 TRELLIS 或 O-Voxel 那样“概念鲜明”，但它很重要，因为它说明了一件事：
+Direct3D-S2 的概念标志性虽不如 TRELLIS 或 O-Voxel 那样突出，但其贡献在于明确了一个重要的工程判断：
 
 > 如果想继续保留 SDF / field 这条路线，就必须在 sparse computation 和 attention 结构上做文章，否则高分辨率成本会迅速失控。
 

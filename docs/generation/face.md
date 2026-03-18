@@ -90,7 +90,7 @@ FACE 不是单纯的 tokenization 技巧，而是一套 **Autoregressive Autoenc
 
 所以 FACE 最核心的价值不只是压缩比 0.11，而是：
 
-> 它从根子上把 autoregressive mesh generation 的基本单元改写了。
+> 它从根本上改变了 autoregressive mesh generation 的基本建模单元。
 
 ---
 
@@ -132,4 +132,4 @@ FACE 代表的其实是一种更激进的原生化趋势：
 
 ## 一句话总结
 
-FACE 的核心意义，是把 autoregressive mesh generation 的建模单元从 `vertex coordinate` 提升到 `triangle face`，从而用 `one-face-one-token` 从根子上重写了长序列问题，并同时拿到了更高效率和更强质量。
+FACE 的核心意义，是把 autoregressive mesh generation 的建模单元从 `vertex coordinate` 提升到 `triangle face`，从而用 `one-face-one-token` 从根本上重新定义了长序列问题，并同时拿到了更高效率和更强质量。

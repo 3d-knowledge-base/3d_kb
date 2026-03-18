@@ -45,7 +45,7 @@ VoxSet 可以理解为一种**半结构化 latent**：
 
 ## 为什么 `localizable code` 很重要
 
-这是这篇论文最值得长期记住的一点。
+这一观点是该论文最具持久参考价值的贡献之一。
 
 很多讨论会说：
 
@@ -53,7 +53,7 @@ VoxSet 可以理解为一种**半结构化 latent**：
 - sparse voxel 更 local
 - 所以后者更好
 
-LATTICE 认为这个说法不够准确。
+LATTICE 指出这一说法不够准确。
 
 更准确的是：
 

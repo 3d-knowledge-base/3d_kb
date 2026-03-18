@@ -118,7 +118,7 @@ LATTICE 的一个非常重要的观点是：
 
 相比 latent voxel 路线，这条路线的好处是更原生 mesh-friendly；缺点是仍然要直接面对复杂拓扑的序列建模难题。
 
-### 一个简化判断
+### 总结
 
 | 路线 | 代表工作 | 最强优点 | 主要短板 |
 |:-----|:---------|:---------|:---------|
@@ -157,7 +157,7 @@ LATTICE 的一个非常重要的观点是：
 |:-----|:-----|
 | Tripo-v2.5 | 闭源 |
 | Meshy-4 | 闭源 |
-| ~~Rodin-v1.5~~ | 效果差，已排除 |
+| ~~Rodin-v1.5~~ | 闭源 |
 
 ---
 
@@ -165,7 +165,7 @@ LATTICE 的一个非常重要的观点是：
 
 1. **前馈式正在取代优化式**：速度从数小时降至数秒/分钟
 2. **“隐空间表征”正在成为核心竞争点**：从 VecSet 到 SLAT、O-Voxel、VoxSet，竞争焦点已不是单纯 backbone 大小
-3. **TRELLIS 成为事实标准骨干**：Hi3DGen、多个编辑方法都直接基于 TRELLIS 预训练
-4. **SDF / isosurface 仍是主流，但正被更 native 的 3D 表示挑战**：TRELLIS 2、SparseFlex、FACE 都在往更原生方向推进
+3. **TRELLIS 逐步确立为主流骨干架构**：Hi3DGen、多个编辑方法都直接基于 TRELLIS 预训练
+4. **SDF / isosurface 仍是主流，但面临更 native 的 3D 表示挑战**：TRELLIS 2、SparseFlex、FACE 都在往更原生方向推进
 5. **Flow / Rectified Flow 正在替代传统 diffusion 训练**：TRELLIS、TripoSG 等都采用了这一方向
-6. **mesh-native 路线重新抬头**：MeshAnything V2、BPT、FACE 说明“直接生成 mesh”并没有输给 latent field 路线
+6. **mesh-native 路线重新获得关注**：MeshAnything V2、BPT、FACE 表明直接生成 mesh 仍是一条具有竞争力的路线

@@ -1,8 +1,6 @@
 # Papers
 
-3D 生成、编辑及相关领域文献索引。当前页已收录 **67 篇**论文/方法，按研究方向分类，并补充了 mesh 生成中的 3D 隐空间表征主线与 mesh editing 主线的关键文献。
-
-> 说明：当前页更偏“索引页”而不是“详情页”。后续会逐步把图示、架构图和更长的方法解释迁移到各专题页/详情页中，让索引页更适合快速检索与排版。
+3D 生成、编辑及相关领域文献索引。当前页收录 **67 篇**论文/方法，按研究方向分类，涵盖 mesh 生成中的 3D 隐空间表征主线与 mesh editing 主线的关键文献。
 
 ---
 
@@ -172,7 +170,7 @@ Mesh 重建、补全与结构化处理。
 
 ---
 
-## Two Literature Threads Worth Tracking
+## Two Core Literature Threads
 
 ### Mesh Generation: 3D latent / token representation line
 

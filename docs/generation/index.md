@@ -1,6 +1,6 @@
 # Generation
 
-本页作为 `Generation` 方向的主页面，只展示核心 topics 和文献列表入口。
+3D Generation 方向的核心专题与文献列表入口。
 
 ---
 

@@ -73,13 +73,13 @@ SC-VAE 的意义就是：
 
 ## 它在整条文献线里的位置
 
-可以把这条演化线简单理解为：
+这条演化线可以概括为：
 
 - `3DShape2VecSet`：先有紧凑 latent set
 - `TRELLIS / SLAT`：再让 latent 结构化、可编辑
 - **TRELLIS 2 / O-Voxel**：进一步让 latent 更接近 native 3D asset
 
-所以 TRELLIS 2 的意义不是“TRELLIS 的小升级”，而是路线升级。
+因此 TRELLIS 2 的意义不在于对 TRELLIS 的渐进式改进，而在于表示路线层面的升级。
 
 ---
 

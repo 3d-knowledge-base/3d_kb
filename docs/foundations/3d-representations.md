@@ -236,37 +236,37 @@ EG3D、LRM 等生成模型广泛使用 Triplane 作为中间表示。在 TRELLIS
 
 ### 关键判断
 
-#### 1. 从“能压缩”到“可定位”
+#### 1. 从"能压缩"到"可定位"
 
-最早的 [[2301_3DShape2VecSet]] 证明了：3D shape 可以被压成一组固定长度 latent vectors，并且这组 vectors 足够适合 Transformer 和 diffusion 建模。
+[3DShape2VecSet](../generation/latent-space-representations.md) 首先证明了：3D shape 可以被压缩为一组固定长度 latent vectors，且这组 vectors 适合 Transformer 和 diffusion 建模。
 
-但后续工作很快发现，**紧凑**不等于**好生成**。如果 token 缺少明确的空间锚点，模型在生成时会更难回答“这个几何细节应该放在哪里”。
+然而后续研究发现，**紧凑**不等于**易于生成**。当 token 缺少明确的空间锚点时，模型在生成阶段更难确定"几何细节应放置在何处"。
 
-这也是 [[../generation/trellis.md|TRELLIS]] 要提出 SLAT 的原因：
+[TRELLIS](../generation/trellis.md) 提出的 SLAT 正是对此问题的回应：
 
 - `{p_i}` 提供显式稀疏结构；
 - `{z_i}` 负责局部几何/外观细节；
-- 表示从“纯 latent set”升级成“带位置的 structured latent”。
+- 表示从"纯 latent set"升级为"带位置的 structured latent"。
 
-#### 2. 从“结构化”到“原生 3D 化”
+#### 2. 从"结构化"到"原生 3D 化"
 
-TRELLIS 已经把 latent 锚定到空间上，但它仍然很大程度沿用 SDF / isosurface 世界观。`TRELLIS 2` 再进一步，提出 **O-Voxel**：
+TRELLIS 将 latent 锚定到空间上，但仍沿用 SDF / isosurface 范式。`TRELLIS 2` 进一步提出 **O-Voxel**：
 
-- 不再只把 3D 几何看作一个待抽壳的场；
+- 不再仅将 3D 几何视为一个待抽壳的场；
 - 而是直接在结构化 3D 单元中编码几何和材质；
 - 目标是更自然地处理开放表面、非流形和原生 PBR。
 
-这一步的重要性在于：latent 不只是“有结构”，而是开始更接近**native 3D asset representation**。
+这一步的意义在于：latent 不只是"有结构"，而是开始更接近 **native 3D asset representation**。
 
-#### 3. “localizable code” 比 “local feature” 更重要
+#### 3. "localizable code" 比 "local feature" 更重要
 
-[[2512_LATTICE_VoxSet]] 的关键观点很值得记住：
+[LATTICE / VoxSet](../generation/lattice.md) 提出的关键观点是：
 
 > 真正关键的不是 local vs global，而是 latent code 是否 **localizable**。
 
-也就是说，VecSet 的问题不只是“太全局”，而是 token 缺少明确位置语义；Sparse voxel 的优势也不只是“更局部”，而是它有天然的空间 anchor。
+具体而言，VecSet 的问题不仅是"太全局"，而是 token 缺少明确位置语义；Sparse voxel 的优势也不仅是"更局部"，而是它具有天然的空间 anchor。
 
-VoxSet 的价值就在这里：
+VoxSet 的设计意义在于：
 
 - 保留 set-based latent 的紧凑性；
 - 同时引入 voxel anchors，提供位置引导；
@@ -274,27 +274,27 @@ VoxSet 的价值就在这里：
 
 #### 4. 平行路线：直接把 mesh 本身当作第一性对象
 
-另一条平行路线不再纠结 latent field，而是直接问：
+另一条平行路线不再纠结 latent field，而是提出：
 
 > 如果最终目标就是高质量 mesh，为什么不直接建模 mesh 序列本身？
 
-这条线上有三篇很关键：
+这条路线上有三项代表性工作：
 
 - **MeshAnything V2**：AMT，相邻面尽量共享边，减少重复顶点 token；
-- **BPT**：Blocked + Patchified Tokenization，把序列压到约 `0.26`；
-- **FACE**：one-face-one-token，把建模单元直接提升到 triangle face，压缩比到 `0.11`。
+- **[BPT](../generation/bpt.md)**：Blocked + Patchified Tokenization，把序列压到约 `0.26`；
+- **[FACE](../generation/face.md)**：one-face-one-token，把建模单元直接提升到 triangle face，压缩比达到 `0.11`。
 
-这条路线的意义在于：它不再满足于“先生成一个 field，再转 mesh”，而是希望把 mesh generation 本身原生化。
+这条路线的意义在于：它不再满足于"先生成一个 field，再转 mesh"，而是将 mesh generation 本身原生化。
 
-### 一个简单总结
+### 总结
 
-当前 mesh generation 里的 3D latent / token 表征，本质上一直在平衡三件事：
+当前 mesh generation 中的 3D latent / token 表征，本质上在平衡三个核心维度：
 
-1. **Compactness**：token 足够少，训练要能 scale。
-2. **Localizability**：token 最好能对应明确的空间位置。
-3. **Native-ness**：表示尽量接近真实 3D 资产，而不是过度依赖后处理转换。
+1. **Compactness**：token 足够少，训练可扩展。
+2. **Localizability**：token 能对应明确的空间位置。
+3. **Native-ness**：表示尽量接近真实 3D 资产，减少对后处理转换的依赖。
 
-VecSet 更偏 compactness，SLAT 更偏 localizability，O-Voxel 更偏 native-ness，VoxSet 是一个折中点，而 BPT / FACE 代表的是另一条 mesh-native 极端路线。
+VecSet 更偏 compactness，SLAT 更偏 localizability，O-Voxel 更偏 native-ness，VoxSet 是三者的折中方案，而 BPT / FACE 代表的是 mesh-native 路线的另一极端。
 
 ---
 
