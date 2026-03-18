@@ -1,10 +1,10 @@
 # Mesh Editing Landscape
 
-Mesh 编辑方法全景。当前方法可按技术路线分为：**基于扩散/生成模型的方法**（主流）、**基于代码的方法**、**基于拓扑/几何处理的方法**，以及更广泛的**前馈式 / 基于优化 / 混合式**分类。
+Mesh 编辑方法概述。当前方法可按技术路线分为：**基于扩散/生成模型的方法**（主流）、**基于代码的方法**、**基于拓扑/几何处理的方法**，以及更广泛的**前馈式 / 基于优化 / 混合式**分类。
 
 ---
 
-## 先看主线：Mesh Editing 方法是怎么演化的
+## 先看主线：Mesh Editing 方法是怎么发展的
 
 过去两年，mesh editing 不是线性发展的，而是明显分成了三代：
 
@@ -27,7 +27,7 @@ Mesh 编辑方法全景。当前方法可按技术路线分为：**基于扩散/
 
 代表：**MVEdit、Tailor3D、PrEditor3D、CraftMesh**
 
-这类方法本质上承认一个现实：
+这类方法实质上承认一个现实：
 
 > 2D 图像编辑远比 3D 编辑成熟，因此先把编辑操作放在 2D，再回升到 3D。
 
@@ -47,7 +47,7 @@ Mesh 编辑方法全景。当前方法可按技术路线分为：**基于扩散/
 
 代表：**TRELLIS、VoxHammer、NANO3D、3DEditVerse、Steer3D、Easy3E、Native 3D Editing、VecSet-Edit**
 
-这代方法真正的转折点，是 **TRELLIS/SLAT** 这类原生 3D 结构化 latent 的出现。因为一旦 3D 表示本身具备：
+这代方法的转折点，是 **TRELLIS/SLAT** 这类原生 3D 结构化 latent 的出现。因为一旦 3D 表示本身具备：
 
 - 稀疏空间结构；
 - 局部 latent；
@@ -77,7 +77,7 @@ Mesh 编辑方法全景。当前方法可按技术路线分为：**基于扩散/
 | **Easy3E** | — | — | （待补充详细信息） | — |
 
 !!! note "TRELLIS 作为骨干"
-    VoxHammer、NANO3D、3DEditVerse、Steer3D 均直接基于 TRELLIS 架构。TRELLIS 的 SLAT 结构化潜变量表示为这些方法提供了统一的编辑基础。详见 [TRELLIS 深度解析](../generation/trellis.md)。
+    VoxHammer、NANO3D、3DEditVerse、Steer3D 均直接基于 TRELLIS 架构。TRELLIS 的 SLAT 结构化潜变量表示为这些方法提供了统一的编辑基础。详见 [TRELLIS 分析](../generation/trellis.md)。
 
 ### 这一支方法的内部细分
 
@@ -186,7 +186,7 @@ VoxHammer 通过缓存未编辑区域 latent 来解决；PrEditor3D 用特征替
 
 那么编辑往往还是“2D 能力外接到 3D”。
 
-而一旦 backbone 拥有像 **SLAT / VoxSet / 原生 3D latent** 这样的结构化表示，编辑才真正可能变成：
+而一旦 backbone 拥有像 **SLAT / VoxSet / 原生 3D latent** 这样的结构化表示，编辑才可能变成：
 
 > 在 3D 里改 3D，而不是在 2D 里改完再猜 3D。
 
@@ -206,4 +206,4 @@ VoxHammer 通过缓存未编辑区域 latent 来解决；PrEditor3D 用特征替
 - 多视图一致性；
 - 真实 mesh 输出质量。
 
-从这个角度看，TRELLIS 及其编辑后续工作之所以重要，并不只是因为结果好，而是因为它们第一次让“native 3D editing”成为一条清晰可持续的路线。
+从这个角度看，TRELLIS 及其编辑后续工作之所以重要，并不只是因为结果好，而是因为它们率先让“native 3D editing”成为一条清晰可持续的路线。

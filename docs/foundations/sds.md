@@ -48,7 +48,7 @@ $$
 ## 应用场景
 
 ### Text-to-3D 生成
-最核心的用途——DreamFusion 开创性地实现了文本直接生成 3D 内容，无需 3D 训练数据。
+主要用途——DreamFusion 率先实现了文本直接生成 3D 内容，无需 3D 训练数据。
 
 ### Text-Guided 3D 编辑
 加载已有 3D 模型，根据新 prompt（如"给车加火焰贴纸"）计算 SDS 梯度修改几何/纹理。后续 UDS (Unified Distillation Sampling) 等工作将生成与编辑统一到同一框架。

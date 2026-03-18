@@ -18,7 +18,7 @@ TripoSG 要回答的是：
 - **VAE 问题**：3D latent 压缩质量不够，后续 flow / diffusion 再强也学不到高保真几何
 - **scale 问题**：3D 模型过去的训练规模、参数量和工程体系都不够成熟
 
-所以 TripoSG 的真正目标不是一个单点 module 创新，而是构建一条可以真正 scale 的 3D shape generation pipeline。
+所以 TripoSG 的目标不是一个单点 module 创新，而是构建一条可以 scale 的 3D shape generation pipeline。
 
 ---
 
@@ -44,9 +44,9 @@ TripoSG 可以概括为三部分：
 
 ## 1. 数据治理为什么是主角
 
-TripoSG 非常强调：如果数据质量差，3D 生成系统很难真正做起来。
+TripoSG 强调：如果数据质量差，3D 生成系统很难做起来。
 
-它构建了一套完整的数据 pipeline：
+它构建了一套数据 pipeline：
 
 - **质量评分**：根据多视角法线图训练质量评估器
 - **样本过滤**：清理大底座、多物体、动画异常、姿态异常等资产
@@ -56,7 +56,7 @@ TripoSG 非常强调：如果数据质量差，3D 生成系统很难真正做起
 
 最后得到约 **2M 高质量 3D shape 数据**。
 
-这一步很关键，因为 TripoSG 的很多优势，其实来自“能不能喂给模型一套真正干净的大规模几何训练集”。
+这一步重要，因为 TripoSG 的很多优势，其实来自“能不能喂给模型一套干净的大规模几何训练集”。
 
 ---
 
@@ -125,11 +125,11 @@ TripoSG 的一个重点是 progressive scaling：
 
 ---
 
-## 4. 它在表示演化中的位置
+## 4. 它在表示发展中的位置
 
 TripoSG 不像 TRELLIS 那样提出全新的结构化 latent，也不像 LATTICE 那样提出一整套 `localizable code` 理论。
 
-它在演化线里的位置更像：
+它在发展线里的位置更像：
 
 - **承接 `3DShape2VecSet` / latent set + VAE 路线**
 - **强调 SDF latent 的几何质量**
@@ -143,7 +143,7 @@ TripoSG 不像 TRELLIS 那样提出全新的结构化 latent，也不像 LATTICE
 
 ### 优势
 
-- 高质量数据治理做得非常彻底
+- 高质量数据治理做得彻底
 - SDF VAE 几何保真度强
 - Rectified Flow + large Transformer + MoE 体现出明显 scaling 潜力
 - 说明 3D 生成确实可以沿着 foundation-model 路线继续做大
@@ -158,4 +158,4 @@ TripoSG 不像 TRELLIS 那样提出全新的结构化 latent，也不像 LATTICE
 
 ## 一句话总结
 
-TripoSG 最重要的意义，不是提出一种最全新的 latent 表示，而是把“高质量数据 + 强几何 VAE + 大规模 Rectified Flow Transformer”这条已经在 2D 验证成功的路线，真正系统化搬到了 3D shape generation。
+TripoSG 主要的意义，不是提出一种最全新的 latent 表示，而是把“高质量数据 + 强几何 VAE + 大规模 Rectified Flow Transformer”这条已经在 2D 验证成功的路线，系统化搬到了 3D shape generation。

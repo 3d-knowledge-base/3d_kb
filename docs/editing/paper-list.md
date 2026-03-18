@@ -1,6 +1,6 @@
 # Editing Paper List
 
-本页收录 3D Editing 方向的代表性文献，按技术路线分组。每篇论文附有简要中文描述；如有详情页则提供链接。
+本页收录 3D Editing 方向的典型文献，按技术路线分组。每篇论文附有简要中文描述；如有详情页则提供链接。
 
 ---
 
@@ -10,11 +10,11 @@
 
 ### VoxHammer (2025.08) → [详情页](voxhammer.md)
 
-无需训练的 3D 编辑方法，基于 TRELLIS 骨干。核心流程是对原始 3D 资产进行 DDIM 反演获取噪声潜变量，再用编辑后的条件重新去噪。关键创新是 KV Cache Replacement 机制：在去噪过程中用原始资产的注意力 KV 缓存替换未编辑区域的对应值，实现精确的局部编辑 + 全局保留。同时提出 Edit3D-Bench 评估基准，包含三维度指标体系（保留度、整体质量、条件对齐）。
+无需训练的 3D 编辑方法，基于 TRELLIS 骨干。核心流程是对原始 3D 资产进行 DDIM 反演获取噪声潜变量，再用编辑后的条件重新去噪。技术特点是 KV Cache Replacement 机制：在去噪过程中用原始资产的注意力 KV 缓存替换未编辑区域的对应值，实现精确的局部编辑 + 全局保留。同时提出 Edit3D-Bench 评估基准，包含三维度指标体系（保留度、整体质量、条件对齐）。
 
 ### NANO3D (2025.10) → [详情页](nano3d.md)
 
-同样基于 TRELLIS 的无训练编辑方法，但采用完全不同的技术路线：FlowEdit（而非 DDIM 反演）作为扩散编辑算法，Voxel-Merge 在结构层融合编辑/未编辑体素，Slat-Merge 在潜变量层做精细混合。还提出 Nano3D-Edit-100k 大规模编辑数据集（100K 对），为后续监督式编辑方法提供数据基础。
+同样基于 TRELLIS 的无训练编辑方法，但采用不同的技术路线：FlowEdit（而非 DDIM 反演）作为扩散编辑算法，Voxel-Merge 在结构层融合编辑/未编辑体素，Slat-Merge 在潜变量层做精细混合。还提出 Nano3D-Edit-100k 大规模编辑数据集（100K 对），为后续监督式编辑方法提供数据基础。
 
 ### 3DEditVerse (2025.10) → [详情页](3deditverse.md)
 
@@ -26,11 +26,11 @@
 
 ### Easy3E (2026.02) → [详情页](easy3e.md)
 
-完全前馈的单视图 3D 编辑流水线。核心创新是 Voxel FlowEdit：将 FlowEdit 算法从 2D 扩展到 3D 体素潜空间，配合轮廓引导（silhouette guidance）和轨迹一致性（trajectory consistency）保持编辑稳定性。纹理精化阶段使用 ERA3D 多视角扩散模型。整个流程无需逐样本优化，全程前馈。
+完全前馈的单视图 3D 编辑流水线。技术特点是 Voxel FlowEdit：将 FlowEdit 算法从 2D 扩展到 3D 体素潜空间，配合轮廓引导（silhouette guidance）和轨迹一致性（trajectory consistency）保持编辑稳定性。纹理精化阶段使用 ERA3D 多视角扩散模型。整个流程无需逐样本优化，全程前馈。
 
 ### Native 3D Editing (2025.11) → [详情页](native-3d-editing.md)
 
-直接在 TRELLIS 的 SLAT 潜空间中进行编辑的前馈方法。核心发现是 Token Concatenation 策略（将源资产 token 和噪声 token 拼接输入）显著优于 Cross-Attention 等替代方案。训练数据通过 Objaverse 部件拆分 + Hunyuan3D 2.1 重建构建。
+直接在 TRELLIS 的 SLAT 潜空间中进行编辑的前馈方法。核心发现是 Token Concatenation 策略（将源资产 token 和噪声 token 拼接输入）优于 Cross-Attention 等替代方案。训练数据通过 Objaverse 部件拆分 + Hunyuan3D 2.1 重建构建。
 
 ### VecSet-Edit (2026.02)
 
@@ -44,11 +44,11 @@
 
 ### PrEditor3D (2024.12) → [详情页](preditor3d.md)
 
-无训练的精确 3D mesh 编辑方法，核心策略是"两路并进，择优合并"。先在 4 个正交视角上使用 MVDream + Prompt-to-Prompt 进行多视图一致的 2D 编辑，再通过 Grounding DINO + SAM 2 精确检测编辑区域。关键创新是 3D 阶段的双路重建：同时重建原始和编辑版本的完整 3D 特征网格（$V_i$ 和 $V_e$），然后在特征空间用精确掩码进行区域替换 + 高斯模糊边界融合。约 74 秒完成一次编辑。
+无训练的精确 3D mesh 编辑方法，核心策略是"两路并进，择优合并"。先在 4 个正交视角上使用 MVDream + Prompt-to-Prompt 进行多视图一致的 2D 编辑，再通过 Grounding DINO + SAM 2 精确检测编辑区域。技术特点是 3D 阶段的双路重建：同时重建原始和编辑版本的完整 3D 特征网格（$V_i$ 和 $V_e$），然后在特征空间用精确掩码进行区域替换 + 高斯模糊边界融合。约 74 秒完成一次编辑。
 
 ### CraftMesh (2025.09) → [详情页](craftmesh.md)
 
-纯推理时流水线，不需要任何训练。先对参考图像进行 2D 编辑，再通过 mesh 生成模型重建编辑后的 3D 形状。关键创新是双重泊松融合：Poisson Geometric Fusion 在几何层面将编辑区域与原始 mesh 无缝拼接，Poisson Texture Harmonization 在纹理层面消除接缝，实现编辑区域与保留区域的自然过渡。
+纯推理时流水线，不需要任何训练。先对参考图像进行 2D 编辑，再通过 mesh 生成模型重建编辑后的 3D 形状。技术特点是双重泊松融合：Poisson Geometric Fusion 在几何层面将编辑区域与原始 mesh 无缝拼接，Poisson Texture Harmonization 在纹理层面消除接缝，实现编辑区域与保留区域的自然过渡。
 
 ### MVEdit (2024.03)
 

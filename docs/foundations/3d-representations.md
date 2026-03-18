@@ -132,7 +132,7 @@ $$
 ### 优势与局限
 
 - **优势**：照片级真实感、视角相关效果（高光/反射）、紧凑存储（MLP 权重仅几 MB）
-- **局限**：训练/渲染速度慢（后续 Instant-NGP 等大幅改善）、仅处理静态场景（D-NeRF 扩展至动态）、数据要求高
+- **局限**：训练/渲染速度慢（后续 Instant-NGP 等明显改善）、仅处理静态场景（D-NeRF 扩展至动态）、数据要求高
 
 ---
 
@@ -223,7 +223,7 @@ EG3D、LRM 等生成模型广泛使用 Triplane 作为中间表示。在 TRELLIS
 - 空间语义足够明确，能做局部控制和 test-time scaling；
 - 最终能稳定解码回 mesh。
 
-### 演化主线
+### 发展脉络
 
 | 方法 | 代表论文 | 核心表示 | 优势 | 主要问题 |
 |:-----|:---------|:---------|:-----|:---------|
@@ -234,7 +234,7 @@ EG3D、LRM 等生成模型广泛使用 Triplane 作为中间表示。在 TRELLIS
 | **Sparse volumetric latent** | SparseFlex / Direct3D-S2 | 高分辨率 sparse SDF / sparse isosurface latent | 高分辨率、复杂拓扑、工程可扩展 | 仍需在 field / isosurface 世界里做解码 |
 | **Mesh-native token** | MeshAnything V2 / BPT / FACE | 直接对 mesh 序列建模 | 原生 mesh 友好，避免“先场后网格” | 序列建模仍受拓扑复杂度影响 |
 
-### 关键判断
+### 主要观察
 
 #### 1. 从"能压缩"到"可定位"
 
@@ -262,7 +262,7 @@ TRELLIS 将 latent 锚定到空间上，但仍沿用 SDF / isosurface 范式。`
 
 [LATTICE / VoxSet](../generation/lattice.md) 提出的关键观点是：
 
-> 真正关键的不是 local vs global，而是 latent code 是否 **localizable**。
+> 重要的不是 local vs global，而是 latent code 是否 **localizable**。
 
 具体而言，VecSet 的问题不仅是"太全局"，而是 token 缺少明确位置语义；Sparse voxel 的优势也不仅是"更局部"，而是它具有天然的空间 anchor。
 
@@ -278,7 +278,7 @@ VoxSet 的设计意义在于：
 
 > 如果最终目标就是高质量 mesh，为什么不直接建模 mesh 序列本身？
 
-这条路线上有三项代表性工作：
+这条路线上有三项相关工作：
 
 - **MeshAnything V2**：AMT，相邻面尽量共享边，减少重复顶点 token；
 - **[BPT](../generation/bpt.md)**：Blocked + Patchified Tokenization，把序列压到约 `0.26`；
@@ -288,13 +288,13 @@ VoxSet 的设计意义在于：
 
 ### 总结
 
-当前 mesh generation 中的 3D latent / token 表征，本质上在平衡三个核心维度：
+当前 mesh generation 中的 3D latent / token 表征，需要在三个维度之间做取舍：
 
 1. **Compactness**：token 足够少，训练可扩展。
 2. **Localizability**：token 能对应明确的空间位置。
 3. **Native-ness**：表示尽量接近真实 3D 资产，减少对后处理转换的依赖。
 
-VecSet 更偏 compactness，SLAT 更偏 localizability，O-Voxel 更偏 native-ness，VoxSet 是三者的折中方案，而 BPT / FACE 代表的是 mesh-native 路线的另一极端。
+VecSet 更偏 compactness，SLAT 更偏 localizability，O-Voxel 更偏 native-ness，VoxSet 是三者的折中方案，而 BPT / FACE 代表的是 mesh-native 路线的另一端。
 
 ---
 

@@ -104,9 +104,9 @@ SLAT → 复用 Part 1 训练好的 Sparse VAE Decoder $\mathcal{D}$ → 3DGS / 
 
 ---
 
-## SLAT → Mesh 解码详解
+## SLAT → Mesh 解码说明
 
-Mesh 解码器 $D_M$ 是 TRELLIS 最关键的输出路径之一。
+Mesh 解码器 $D_M$ 是 TRELLIS 重要的输出路径之一。
 
 ### 输出参数
 
@@ -119,7 +119,7 @@ $$
 - **$w \in \mathbb{R}^{45}$**：FlexiCubes 参数（灵活性权重 $\alpha, \beta, \gamma, \delta$）
 - **$d \in \mathbb{R}^8$**：一个体素 8 个顶点的 SDF 值
 
-### 完整流程
+### 流程
 
 | 步骤 | 操作 | 分辨率 |
 |:-----|:-----|:-------|

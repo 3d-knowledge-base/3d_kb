@@ -2,15 +2,15 @@
 
 > *Flexible Isosurface Extraction for Gradient-Based Mesh Optimization* (Shen et al., NeurIPS 2023)
 
-FlexiCubes 是对 Dual Marching Cubes (DMC) 的**完全参数化、可微化改造**，专为深度学习梯度优化而设计。它引入三组可学习参数，使网格提取过程本身也能参与端到端的反向传播优化，是当前 3D 生成领域（TRELLIS、SparseFlex 等）最主流的 mesh 提取方案。
+FlexiCubes 是对 Dual Marching Cubes (DMC) 的**完全参数化、可微化改造**，专为深度学习梯度优化而设计。它引入三组可学习参数，使网格提取过程本身也能参与端到端的反向传播优化，是当前 3D 生成领域（TRELLIS、SparseFlex 等）广泛使用的 mesh 提取方案。
 
 ---
 
-## 核心洞察
+## 设计思路
 
 > 仅优化 SDF 不够——网格提取过程本身也需要可学习参数。
 
-传统 Marching Cubes 是"死规则"：给定 SDF 值，输出固定。即使 SDF 预测完美，MC 的离散查表和边上插值仍会导致信息损失。FlexiCubes 的核心思路是让提取过程也成为可优化的"软"操作。
+传统 Marching Cubes 是"死规则"：给定 SDF 值，输出固定。即使 SDF 预测完美，MC 的离散查表和边上插值仍会导致信息损失。FlexiCubes 的思路是让提取过程也成为可优化的"软"操作。
 
 ---
 

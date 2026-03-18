@@ -2,7 +2,7 @@
 
 > *Hunyuan3D 2.0: Scaling Diffusion Models for High Resolution Textured 3D Assets Generation*
 
-腾讯开源的大规模 3D 生成系统，提供从单张图片生成高分辨率带纹理 3D 资产的完整管线。
+腾讯开源的大规模 3D 生成系统，提供从单张图片生成高分辨率带纹理 3D 资产的流程。
 
 ---
 
@@ -37,7 +37,7 @@
 
 **编码器 $\mathcal{E}_s$**：
 
-1. **点云采样**（关键创新）
+1. **点云采样**（技术特点）
     - 均匀采样 $P_u$：覆盖整体表面
     - **重要性采样 $P_i$**：在边/角等高曲率区域采样更多点 → 捕捉高频细节
 2. **FPS 获取查询点** $Q_u, Q_i \to Q$
@@ -127,9 +127,9 @@ $$
 
 | 评估维度 | 指标 | 结果 |
 |:---------|:-----|:-----|
-| 形状重建 | V-IoU, S-IoU | ShapeVAE 全面胜出，验证重要性采样有效性 |
+| 形状重建 | V-IoU, S-IoU | ShapeVAE 在各指标上优于其他方法，验证重要性采样有效性 |
 | 形状生成 | ULIP-T/I, Uni3D-T/I | DiT 条件对齐度最高 |
-| 纹理合成 | FID_CLIP↓, CMMD↓, CLIP-score↑ | Paint 全面最优 |
+| 纹理合成 | FID_CLIP↓, CMMD↓, CLIP-score↑ | Paint 在各指标上表现最好 |
 | 端到端 | FID_CLIP↓, CMMD↓, CLIP-score↑ | 超越所有开源和闭源基线 |
 | 用户研究 | 整体满意度、质量、图像遵循度 | 所有维度最高偏好 |
 

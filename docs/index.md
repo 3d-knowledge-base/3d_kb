@@ -12,15 +12,15 @@
 
 ### [Generation](generation/index.md) — 3D 生成
 
-TRELLIS、Hunyuan3D 2.0 等代表性模型的深度解析，以及 Mesh 生成、高斯转 Mesh、场景级生成等专题。
+TRELLIS、Hunyuan3D 2.0 等模型的技术分析，以及 Mesh 生成、高斯转 Mesh、场景级生成等专题。
 
 ### [Editing](editing/index.md) — 3D 编辑
 
-Mesh 编辑方法全景对比、编辑核心挑战分析、编辑数据集汇总。
+Mesh 编辑方法对比、编辑主要挑战分析、编辑数据集汇总。
 
 ### [Evaluation](evaluation/index.md) — 评估体系
 
-3D 生成/编辑的评估指标详解与 Benchmark 演进综述。
+3D 生成/编辑的评估指标说明与 Benchmark 发展综述。
 
 ---
 

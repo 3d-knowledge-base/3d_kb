@@ -1,12 +1,12 @@
 # 生成模型基础：从 DDPM 到 Flow Matching
 
-视觉生成模型是 3D 生成技术的上游基础。现代 3D 生成方法（TRELLIS、Hunyuan3D、Direct3D 等）的骨干网络几乎全部来自 2D 视觉生成领域的技术演进。本页梳理从 DDPM 到 Flow Matching 的完整发展脉络。
+视觉生成模型是 3D 生成技术的上游基础。现代 3D 生成方法（TRELLIS、Hunyuan3D、Direct3D 等）的骨干网络几乎全部来自 2D 视觉生成领域的技术发展。本页梳理从 DDPM 到 Flow Matching 的技术发展线索。
 
 ---
 
-## 发展全景
+## 发展概览
 
-视觉生成技术的演进可划分为六个关键阶段：
+视觉生成技术的发展可划分为六个阶段：
 
 | 阶段 | 核心突破 | 代表工作 | 时间 |
 |:-----|:---------|:---------|:-----|
@@ -156,7 +156,7 @@ $$
 
 > *Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow* (Liu et al., 2023)
 
-Rectified Flow 的核心贡献是 **Reflow 过程**——一种迭代式路径矫直方法：
+Rectified Flow 的主要贡献是 **Reflow 过程**——一种迭代式路径矫直方法：
 
 ```text
 [Round 0] 训练 Flow Matching 模型 v₀
@@ -206,11 +206,11 @@ LDM 将扩散过程从像素空间搬到低维潜空间：
     最后：z₀ → Decoder → 图像
 ```
 
-### Autoencoder 的演进
+### Autoencoder 的发展
 
-LDM 的 Autoencoder 设计继承了一条清晰的演进路线：
+LDM 的 Autoencoder 设计沿着以下发展路线：
 
-| 方法 | 核心贡献 | 路线 |
+| 方法 | 主要贡献 | 路线 |
 |:-----|:---------|:-----|
 | **AE** | 基础编解码框架 | — |
 | **VAE** | 正则化潜空间（KL 散度） | 提升质量 |
@@ -281,7 +281,7 @@ Unpatchify → 预测噪声 ε̂
 | **统一架构** | 图像/视频/3D 可共用同一骨干 |
 
 !!! note "在 3D 生成中的影响"
-    TRELLIS 的 Sparse Flow Transformer 本质上是 DiT 在 3D 稀疏数据上的适配：用 Sparse Attention 处理 SLAT 结构化潜变量中的稀疏 token，条件通过 adaLN 注入。
+    TRELLIS 的 Sparse Flow Transformer 是 DiT 在 3D 稀疏数据上的适配：用 Sparse Attention 处理 SLAT 结构化潜变量中的稀疏 token，条件通过 adaLN 注入。
 
 ---
 
@@ -322,11 +322,11 @@ $$
 $\epsilon_c - \epsilon_{uc}$ 可以理解为"条件相比无条件多出来的方向"。$w > 1$ 时，模型沿这个方向**过度移动**（外推），使生成结果更强烈地符合条件，但牺牲多样性。
 
 !!! info "CFG 与 SDS 的关系"
-    SDS 的梯度公式 $\nabla_\theta \mathcal{L} \propto (\hat{\epsilon}_\phi - \epsilon)$ 本质上也在使用 CFG 增强后的噪声预测。CFG 的引导强度直接影响 SDS 的优化方向和生成质量。
+    SDS 的梯度公式 $\nabla_\theta \mathcal{L} \propto (\hat{\epsilon}_\phi - \epsilon)$ 也在使用 CFG 增强后的噪声预测。CFG 的引导强度直接影响 SDS 的优化方向和生成质量。
 
 ---
 
-## 技术演进总结
+## 技术发展总结
 
 ```text
 GAN (不稳定)

@@ -124,7 +124,7 @@ Mesh 重建、补全与结构化处理。
 
 **BPT** (2411) — Blocked and Patchified Tokenization，把 Mesh 序列压缩到约 0.26，使 8k faces 级别训练成为可能。
 
-**FACE** (2603) — one-face-one-token 自回归 mesh 表示，压缩比达到 0.11，当前 mesh-native 路线中最激进的一类。
+**FACE** (2603) — one-face-one-token 自回归 mesh 表示，压缩比达到 0.11，属于当前 mesh-native 路线中压缩率较高的一类。
 
 **MeshCoder** (2508) — 点云到可执行 Blender Python 脚本，构建大规模「3D 模型-代码」配对数据集训练 LLM。
 
@@ -140,7 +140,7 @@ Mesh 重建、补全与结构化处理。
 
 ---
 
-**3D Representation Survey** — Voxel, 点云, Mesh, SDF, NeRF, 3DGS, Triplane, DMTet 全面综述。
+**3D Representation Survey** — Voxel, 点云, Mesh, SDF, NeRF, 3DGS, Triplane, DMTet 综述。
 
 ![3D 表征概览](https://arxiv.org/html/2410.06475v1/extracted/5912068/3d.png)
 
@@ -187,7 +187,7 @@ Mesh 重建、补全与结构化处理。
 - **2D lifting 到 3D**：MVEdit、Tailor3D、CraftMesh、PrEditor3D
 - **原生 3D latent editing**：TRELLIS、VoxHammer、NANO3D、3DEditVerse、Steer3D、Easy3E、Native 3D Editing、VecSet-Edit
 
-这条演化背后的核心变化是：编辑操作正逐步从“先在 2D 改，再重建回 3D”转向“直接在原生 3D latent 上改”。
+这条发展线索背后的主要变化是：编辑操作正逐步从“先在 2D 改，再重建回 3D”转向“直接在原生 3D latent 上改”。
 
 ---
 
@@ -207,7 +207,7 @@ Mesh 重建、补全与结构化处理。
 
 **Eval3D** (2504) — 基础模型探针的一致性评估：零样本、像素级空间反馈、可解释缺陷定位。
 
-**Hi3DEval** (2508) — 分层级评估：对象→部件→材质三级，30 模型 × 15K 资产，首次评估 PBR 属性。
+**Hi3DEval** (2508) — 分层级评估：对象→部件→材质三级，30 模型 × 15K 资产，涵盖 PBR 属性评估。
 
 ---
 

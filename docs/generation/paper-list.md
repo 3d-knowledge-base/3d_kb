@@ -1,6 +1,6 @@
 # Generation Paper List
 
-本页收录 3D Generation 方向的代表性文献，按子方向分组。每篇论文附有简要中文描述；如有详情页则提供链接。
+本页收录 3D Generation 方向的典型文献，按子方向分组。每篇论文附有简要中文描述；如有详情页则提供链接。
 
 ---
 
@@ -20,15 +20,15 @@ TRELLIS 的正式续作。引入 O-Voxel 作为更 native 的结构化 3D 资产
 
 ### TripoSG (2025.02) → [详情页](triposg.md)
 
-以大规模高质量数据为核心驱动力的 3D 生成方法。采用 SDF VAE 将 3D 形状编码为连续符号距离场潜变量，配合 Rectified Flow Transformer 完成生成。强调数据规模与质量（百万级清洗数据）对生成效果的决定性影响，在几何细节和鲁棒性上表现突出。
+以大规模高质量数据为核心驱动力的 3D 生成方法。采用 SDF VAE 将 3D 形状编码为连续符号距离场潜变量，配合 Rectified Flow Transformer 完成生成。强调数据规模与质量（百万级清洗数据）对生成效果的重要影响，在几何细节和鲁棒性上表现突出。
 
 ### SparseFlex (2025.03) → [详情页](sparseflex.md)
 
-聚焦高分辨率、任意拓扑 3D 形状建模的基础表示。将 FlexiCubes 从 dense grid 改造为稀疏结构，仅在表面附近保留活跃体素。核心创新是 frustum-aware sectional voxel training：每次只激活当前视角相关的体素参与训练，使高分辨率可微 isosurface 建模真正可行。支持开放表面与内部结构。
+聚焦高分辨率、任意拓扑 3D 形状建模的基础表示。将 FlexiCubes 从 dense grid 改造为稀疏结构，仅在表面附近保留活跃体素。技术特点是 frustum-aware sectional voxel training：每次只激活当前视角相关的体素参与训练，使高分辨率可微 isosurface 建模可行。支持开放表面与内部结构。
 
 ### Direct3D-S2 (2025.05) → [详情页](direct3d-s2.md)
 
-面向可扩展 3D 生成的方法，采用 Sparse SDF VAE 将 3D 形状编码为稀疏 SDF 潜变量，并在生成阶段使用 Spatial Sparse Attention 大幅降低 Transformer 的计算复杂度。这使得模型能在更高分辨率上生成 3D 资产，同时保持训练和推理效率。
+面向可扩展 3D 生成的方法，采用 Sparse SDF VAE 将 3D 形状编码为稀疏 SDF 潜变量，并在生成阶段使用 Spatial Sparse Attention 降低 Transformer 的计算复杂度。这使得模型能在更高分辨率上生成 3D 资产，同时保持训练和推理效率。
 
 ### LATTICE / VoxSet (2025.12) → [详情页](lattice.md)
 
@@ -44,7 +44,7 @@ TRELLIS 的正式续作。引入 O-Voxel 作为更 native 的结构化 3D 资产
 
 ### FACE (2026.03) → [详情页](face.md)
 
-提出 one-face-one-token 的自回归 mesh 生成范式：每个三角面片被编码为单个 token，通过 VQ-VAE 学习离散面片码本。相比逐顶点坐标生成（如 MeshGPT），这种面片级 tokenization 大幅缩短序列长度，使高面数 mesh 的自回归生成变得高效。
+提出 one-face-one-token 的自回归 mesh 生成范式：每个三角面片被编码为单个 token，通过 VQ-VAE 学习离散面片码本。相比逐顶点坐标生成（如 MeshGPT），这种面片级 tokenization 缩短序列长度，使高面数 mesh 的自回归生成变得高效。
 
 ### Hi3DGen (2025.03)
 
@@ -52,7 +52,7 @@ TRELLIS 的正式续作。引入 O-Voxel 作为更 native 的结构化 3D 资产
 
 ### Edgerunner (2024.09)
 
-面向 artist-style mesh 的自回归生成方法，核心创新在于压缩 mesh 序列的设计，使得生成的 mesh 更接近手工建模的拓扑质量。
+面向 artist-style mesh 的自回归生成方法，技术特点在于压缩 mesh 序列的设计，使得生成的 mesh 更接近手工建模的拓扑质量。
 
 ---
 

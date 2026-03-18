@@ -52,7 +52,7 @@ TRELLIS 的核心不是单纯做一个更强的 image-to-3D，而是提出 **SLA
 - 稀疏体素位置集合 `{p_i}` 负责结构；
 - 每个 active voxel 的局部 latent `{z_i}` 负责细节。
 
-这让 3D latent 第一次同时具备：
+这让 3D latent 同时具备：
 
 - 明确的空间锚点；
 - 局部编辑能力；
@@ -78,9 +78,9 @@ TRELLIS 2 进一步指出：即使有 SLAT，如果底层几何还依赖 SDF/iso
 
 代表：**[LATTICE / VoxSet](lattice.md)**
 
-LATTICE 的一个非常重要的观点是：
+LATTICE 的一个重要的观点是：
 
-> 真正关键的不是 local vs global，而是 latent code 是否 **localizable**。
+> 关键的不是 local vs global，而是 latent code 是否 **localizable**。
 
 所以 VoxSet 的做法是：
 
@@ -94,7 +94,7 @@ LATTICE 的一个非常重要的观点是：
 - 比纯 VecSet 更易定位；
 - 支持 test-time scaling。
 
-### 5. Sparse volumetric 路线：把高分辨率和复杂拓扑真正做起来
+### 5. Sparse volumetric 路线：把高分辨率和复杂拓扑做起来
 
 代表：**[TripoSG](triposg.md)、[SparseFlex](sparseflex.md)、[Direct3D-S2](direct3d-s2.md)**
 
@@ -102,7 +102,7 @@ LATTICE 的一个非常重要的观点是：
 - **SparseFlex**：强调高分辨率 sparse isosurface representation，支持 open surfaces、interior structures，以及 frustum-aware sectional voxel training。
 - **Direct3D-S2**：强调 Sparse SDF VAE + spatial sparse attention，把高分辨率 sparse volumetric generation 做得更可扩展。
 
-这一组工作很重要，因为它们证明：3D 生成并不只缺“好表示”，还缺一套真正能训练到高分辨率、大数据规模的系统工程。
+这一组工作很重要，因为它们证明：3D 生成并不只缺“好表示”，还缺一套能训练到高分辨率、大数据规模的系统工程。
 
 ### 6. Mesh-native 路线：直接把 mesh 当成第一性对象
 
@@ -120,7 +120,7 @@ LATTICE 的一个非常重要的观点是：
 
 ### 总结
 
-| 路线 | 代表工作 | 最强优点 | 主要短板 |
+| 路线 | 代表工作 | 主要优点 | 主要短板 |
 |:-----|:---------|:---------|:---------|
 | VecSet | 3DShape2VecSet | 紧凑、易训练 | 位置语义弱 |
 | Structured latent | TRELLIS / SLAT | 有结构、有局部性、便于编辑 | token 较重 |

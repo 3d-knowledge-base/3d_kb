@@ -7,7 +7,7 @@
 ## Topics
 
 ### [Mesh Editing Landscape](mesh-editing-landscape.md)
-Mesh editing 方法谱系、演化主线，以及 2D-first 与 native-3D 路线的关系。
+Mesh editing 方法谱系、发展主线，以及 2D-first 与 native-3D 路线的关系。
 
 ### [Editing Challenges](editing-challenges.md)
 精确控制、区域保持、速度质量权衡、2D-3D 偏差等核心问题整理。
