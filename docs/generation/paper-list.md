@@ -1,0 +1,79 @@
+# Generation Paper List
+
+本页收录 3D Generation 方向的代表性文献，按子方向分组。每篇论文附有简要中文描述；如有详情页则提供链接。
+
+---
+
+## Mesh / Object Generation
+
+### TRELLIS (2024.12) → [详情页](trellis.md)
+
+提出 SLAT（Structured LATent）表示，将 3D 资产编码为稀疏体素位置 + 局部潜变量的组合。采用 Sparse VAE 编解码 + 两阶段 Rectified Flow Transformer 生成（先结构后细节）。SLAT 可统一解码为 Mesh、3DGS、辐射场等多种格式，成为后续众多编辑方法（VoxHammer、NANO3D、Steer3D 等）的核心骨干。
+
+### TRELLIS 2 (2025.12) → [详情页](trellis2.md)
+
+TRELLIS 的正式续作。引入 O-Voxel 作为更 native 的结构化 3D 资产表示，以及 SC-VAE（Shape-Color VAE）对几何与外观进行显式解耦。相比 SLAT 依赖多视角 DINOv2 特征聚合，O-Voxel 直接从 3D 资产本身编码，减少了信息瓶颈，提升了重建保真度和生成质量。
+
+### Hunyuan3D 2.0 (2025.01) → [详情页](hunyuan3d.md)
+
+腾讯的大规模 3D 生成系统，核心设计是几何-纹理解耦：ShapeVAE 负责几何生成（SDF → Mesh），Paint 模块负责高分辨率纹理合成。采用 DiT 架构和大规模训练数据，在几何精度和纹理质量上均达到工业级水平。支持 Text-to-3D 和 Image-to-3D 两条路径。
+
+### TripoSG (2025.02) → [详情页](triposg.md)
+
+以大规模高质量数据为核心驱动力的 3D 生成方法。采用 SDF VAE 将 3D 形状编码为连续符号距离场潜变量，配合 Rectified Flow Transformer 完成生成。强调数据规模与质量（百万级清洗数据）对生成效果的决定性影响，在几何细节和鲁棒性上表现突出。
+
+### SparseFlex (2025.03) → [详情页](sparseflex.md)
+
+聚焦高分辨率、任意拓扑 3D 形状建模的基础表示。将 FlexiCubes 从 dense grid 改造为稀疏结构，仅在表面附近保留活跃体素。核心创新是 frustum-aware sectional voxel training：每次只激活当前视角相关的体素参与训练，使高分辨率可微 isosurface 建模真正可行。支持开放表面与内部结构。
+
+### Direct3D-S2 (2025.05) → [详情页](direct3d-s2.md)
+
+面向可扩展 3D 生成的方法，采用 Sparse SDF VAE 将 3D 形状编码为稀疏 SDF 潜变量，并在生成阶段使用 Spatial Sparse Attention 大幅降低 Transformer 的计算复杂度。这使得模型能在更高分辨率上生成 3D 资产，同时保持训练和推理效率。
+
+### LATTICE / VoxSet (2025.12) → [详情页](lattice.md)
+
+提出介于纯集合（set）和稀疏体素（sparse voxel）之间的"半结构化"潜变量表示。核心思想是让潜变量既保留一定的空间可定位性（localizable），又不完全绑定到固定网格上，从而在生成灵活性和空间结构信息之间取得平衡。
+
+### MeshAnything V2 (2024.08) → [详情页](mesh-generation.md)
+
+提出 AMT（Adjacent Mesh Tokenization）方法，将三角网格序列化为适合自回归生成的 token 序列。目标是生成类似人工建模师风格的 artist-style mesh，而非从隐式场提取的密集三角面片。
+
+### BPT (2024.11) → [详情页](bpt.md)
+
+提出 Blocked and Patchified Tokenization 策略，将高面数三角网格分块、patch 化后压缩为更短的 token 序列。这使得自回归 Transformer 能够生成高达数千面的精细 mesh，突破了此前 mesh 生成方法在面数上的瓶颈。
+
+### FACE (2026.03) → [详情页](face.md)
+
+提出 one-face-one-token 的自回归 mesh 生成范式：每个三角面片被编码为单个 token，通过 VQ-VAE 学习离散面片码本。相比逐顶点坐标生成（如 MeshGPT），这种面片级 tokenization 大幅缩短序列长度，使高面数 mesh 的自回归生成变得高效。
+
+### Hi3DGen (2025.03)
+
+基于 TRELLIS 风格骨干的高保真几何生成方法，在几何细节精度上进一步提升。目前无详情页。
+
+### Edgerunner (2024.09)
+
+面向 artist-style mesh 的自回归生成方法，核心创新在于压缩 mesh 序列的设计，使得生成的 mesh 更接近手工建模的拓扑质量。目前无详情页。
+
+---
+
+## Scene / World Generation
+
+### WorldGen (2025.11) → [详情页](scene-generation.md)
+
+采用"规划 → 重建 → 增强"三阶段流水线生成完整 3D 世界。先用 LLM 规划场景布局，再利用 3D 重建技术构建初始场景，最后通过增强模块提升视觉质量和一致性。
+
+### WorldGrow (2025.10) → [详情页](scene-generation.md)
+
+通过 scene-block inpainting 策略实现无限 3D 世界扩展：每次在已有场景边界处生成新的场景块并无缝拼接，从而实现理论上无限延伸的 3D 世界生成。
+
+### MIDI (2024.12) → [详情页](scene-generation.md)
+
+专注多实例 3D 生成与组合装配。先独立生成场景中的各个 3D 物体，再通过组合策略将它们合理放置到统一场景中，实现从文本描述到多物体 3D 场景的端到端生成。
+
+### Infinigen (2023.06) → [详情页](scene-generation.md)
+
+大规模程序化自然世界生成系统，通过精心设计的程序化规则生成地形、植被、岩石、水体等自然元素，能产出极高质量和多样性的 3D 自然场景数据。
+
+### Infinigen Indoors (2024.06) → [详情页](scene-generation.md)
+
+Infinigen 的室内扩展版本，将程序化生成范式应用于室内场景，自动生成家具、装饰、房间布局等，为室内 3D 场景理解和生成提供大规模训练数据。

@@ -1,0 +1,41 @@
+# MkDocs build output
+site/
+
+# Python virtual environments and caches (if you use them for plugins)
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+.env/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local Workspace & Agent Constraints (AI tools)
+.opencode/
+AGENTS.md
+agents.md
+.cursorrules
+
+# Temporary and log files
+tmp/
+temp/
+*.tmp
+*.log
+*.bak

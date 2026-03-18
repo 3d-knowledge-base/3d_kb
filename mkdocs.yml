@@ -1,0 +1,91 @@
+site_name: 3D Generation & Editing Knowledge Base
+site_description: 3D生成与编辑技术知识库
+site_url: ""
+
+theme:
+  name: material
+  language: zh
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - toc.follow
+  icon:
+    repo: fontawesome/brands/github
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.mark
+  - pymdownx.critic
+  - tables
+  - attr_list
+  - md_in_html
+  - footnotes
+  - toc:
+      permalink: true
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+extra:
+  social: []
+
+plugins:
+  - search
+
+nav:
+  - Home: index.md
+  - Foundations:
+      - foundations/index.md
+      - 3D Representations: foundations/3d-representations.md
+      - SDS: foundations/sds.md
+      - Mesh Extraction: foundations/mesh-extraction.md
+      - Generative Models: foundations/generative-models.md
+  - Generation:
+      - generation/index.md
+      - 3D Latent Space Representations: generation/latent-space-representations.md
+      - Mesh Generation: generation/mesh-generation.md
+      - Gaussian to Mesh: generation/gaussian-to-mesh.md
+      - Scene Generation: generation/scene-generation.md
+      - Paper List: generation/paper-list.md
+  - Editing:
+      - editing/index.md
+      - Mesh Editing Landscape: editing/mesh-editing-landscape.md
+      - Editing Challenges: editing/editing-challenges.md
+      - Datasets: editing/datasets.md
+      - Paper List: editing/paper-list.md
+  - Evaluation:
+      - evaluation/index.md
+      - Metrics: evaluation/metrics.md
+      - Benchmarks: evaluation/benchmarks.md
+      - Paper List: evaluation/paper-list.md
+  - Papers: papers.md
