@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # FlexiCubes
 
 > *Flexible Isosurface Extraction for Gradient-Based Mesh Optimization* (Shen et al., NeurIPS 2023)

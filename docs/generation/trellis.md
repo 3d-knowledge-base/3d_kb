@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # TRELLIS
 
 > *TRELLIS: Structured Latent Representations for 3D Generation*

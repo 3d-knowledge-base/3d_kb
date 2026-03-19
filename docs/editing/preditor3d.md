@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # PrEditor3D
 
 > *PrEditor3D: Fast and Precise 3D Shape Editing (2024.12)*

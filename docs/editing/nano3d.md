@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # NANO3D
 
 > *NANO3D: Training-Free 3D Editing Framework (2025.10)*

@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # 生成模型基础：从 DDPM 到 Flow Matching
 
 视觉生成模型是 3D 生成技术的上游基础。现代 3D 生成方法（TRELLIS、Hunyuan3D、Direct3D 等）的骨干网络几乎全部来自 2D 视觉生成领域的技术发展。本页梳理从 DDPM 到 Flow Matching 的技术发展线索。

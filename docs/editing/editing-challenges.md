@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # Editing Challenges
 
 3D Mesh 编辑面临的核心挑战。以下总结来自 PrEditor3D、VoxHammer、MeshPad 等论文。

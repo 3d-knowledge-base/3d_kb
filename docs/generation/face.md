@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # FACE
 
 > *FACE: A Face-based Autoregressive Representation for High-Fidelity and Efficient Mesh Generation*

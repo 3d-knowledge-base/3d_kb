@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # MeshPad
 
 > *MeshPad: Interactive Mesh Generation and Editing via Sketch-Based Atomic Operations on Autoregressive Mesh Models*

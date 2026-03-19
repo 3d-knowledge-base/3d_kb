@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # BPT
 
 > *Scaling Mesh Generation via Compressive Tokenization*

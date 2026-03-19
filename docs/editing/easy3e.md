@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # Easy3E
 
 > *Easy3E: Easy and Efficient 3D Editing (2026.02) — 基于 TRELLIS 骨干的全前馈单视图 3D 编辑流水线*

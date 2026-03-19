@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # CraftMesh
 
 > *CraftMesh: Training-Free High-Fidelity Mesh Editing via Image Editing and Poisson Fusion*

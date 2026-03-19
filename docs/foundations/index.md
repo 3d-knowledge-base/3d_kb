@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # Foundations
 
 本节介绍 3D 生成与编辑所需的核心基础知识。

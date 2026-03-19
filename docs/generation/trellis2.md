@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # TRELLIS 2
 
 > *TRELLIS 2*

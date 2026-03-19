@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # Mesh Generation Models
 
 3D Mesh 生成模型总览。除了常见的**前馈式 (Feed-forward)** 和**基于优化 (Optimization-based)** 分类，更重要的一条主线其实是：

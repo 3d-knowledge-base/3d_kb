@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # Evaluation Paper List
 
 本页收录 3D Evaluation 方向的典型文献与评估框架，按类别分组。每条附有简要中文描述；如有详情页则提供链接。

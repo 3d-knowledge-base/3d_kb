@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # Marching Cubes
 
 > *Marching Cubes: A High Resolution 3D Surface Construction Algorithm* (Lorensen & Cline, 1987)

@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # Mesh Extraction: 从隐式场到三角网格
 
 从隐式场（SDF / 标量场）中提取显式三角网格表面，是 3D 生成 pipeline 的关键一步。本文梳理三种主流方案——经典 Marching Cubes、可微的 DMTet、以及完全可微的 FlexiCubes——的原理与发展关系。

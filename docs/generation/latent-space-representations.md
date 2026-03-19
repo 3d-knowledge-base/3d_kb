@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # 3D Latent Space Representations
 
 3D Latent Space Representations 是当前高质量 3D 生成系统主要的基础模块之一。

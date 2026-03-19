@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # VoxHammer
 
 > *VoxHammer: Training-Free 3D Editing via DDIM Inversion and KV Cache Replacement on TRELLIS*

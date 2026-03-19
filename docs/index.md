@@ -3,6 +3,7 @@ title: 3D Generation & Editing Knowledge Base
 description: 系统梳理 3D 视觉生成与编辑领域的表征、生成、编辑与评估方向核心文献
 hide:
   - navigation
+comments: true
 ---
 
 # 3D Generation & Editing Knowledge Base

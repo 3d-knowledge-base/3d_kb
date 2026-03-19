@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # Gaussian to Mesh
 
 从 3D Gaussian Splatting (3DGS) 中提取高质量 Mesh 是一个核心挑战。3DGS 实质上是为快速渲染优化的数百万个无序、离散的 3D 高斯体，并不天然形成连续平滑的几何表面。所有方法都需要引入额外的几何约束或先验。

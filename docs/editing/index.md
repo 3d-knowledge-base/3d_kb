@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # Editing
 
 本页作为 `Editing` 方向的主页面，只展示核心 topics 和文献列表入口。

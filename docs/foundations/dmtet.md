@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # DMTet (Deep Marching Tetrahedra)
 
 > *Deep Marching Tetrahedra: a Hybrid Representation for High-Resolution 3D Shape Synthesis* (Shen et al., NeurIPS 2021)

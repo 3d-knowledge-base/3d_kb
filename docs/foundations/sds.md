@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # SDS (Score Distillation Sampling)
 
 **分数蒸馏采样 (Score Distillation Sampling, SDS)** 是将预训练 2D 扩散模型的知识"蒸馏"到 3D 空间的核心技术，由 Google 的 **DreamFusion** 提出。它使得无需任何 3D 训练数据，仅凭文本描述即可生成 3D 内容。

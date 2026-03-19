@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # Evaluation
 
 3D 生成与编辑评估方向的核心专题与文献列表入口。

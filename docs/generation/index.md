@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # Generation
 
 3D Generation 方向的核心专题与文献列表入口。

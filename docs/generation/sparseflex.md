@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # SparseFlex
 
 > *SparseFlex: High-Resolution and Arbitrary-Topology 3D Shape Modeling*

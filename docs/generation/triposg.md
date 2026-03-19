@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # TripoSG
 
 > *TripoSG: High-Fidelity 3D Shape Synthesis using Large-Scale Rectified Flow Models*

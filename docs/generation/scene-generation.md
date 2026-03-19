@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # Scene Generation
 
 场景级 3D 生成——从单物体扩展到三维空间的构建。

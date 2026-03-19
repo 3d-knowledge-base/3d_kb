@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # 3DEditVerse
 
 > *3DEditVerse: A Dataset and Dual-Guidance Editing Model for 3D Objects (2025.10)*

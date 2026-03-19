@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # Benchmarks
 
 3D 生成评估 Benchmark 的综述与发展分析。涵盖 6 个评估框架。

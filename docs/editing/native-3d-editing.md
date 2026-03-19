@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # Native 3D Editing
 
 > *Native 3D Editing (2025.11) — 在 TRELLIS 的 SLAT 隐空间中直接进行前馈式 3D 编辑*

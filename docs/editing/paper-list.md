@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # Editing Paper List
 
 本页收录 3D Editing 方向的典型文献，按技术路线分组。每篇论文附有简要中文描述；如有详情页则提供链接。

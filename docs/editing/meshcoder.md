@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # MeshCoder
 
 > *MeshCoder: Generating Executable Blender Python Scripts from Point Clouds for Parametric 3D Modeling*

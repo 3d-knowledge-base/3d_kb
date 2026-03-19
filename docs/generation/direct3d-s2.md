@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # Direct3D-S2
 
 > *Direct3D-S2*

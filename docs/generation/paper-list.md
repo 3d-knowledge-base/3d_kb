@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # Generation Paper List
 
 本页收录 3D Generation 方向的典型文献，按子方向分组。每篇论文附有简要中文描述；如有详情页则提供链接。

@@ -1,3 +1,7 @@
+---
+comments: true
+---
+
 # Steer3D
 
 > *Steer3D: Feed-Forward 3D Editing via ControlNet-Style Bypass on TRELLIS Backbone (2025.12)*
