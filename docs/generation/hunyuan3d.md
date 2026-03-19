@@ -153,4 +153,4 @@ $$
 3. **缺乏失败案例分析**：透明/反射材质、极细结构、复杂拓扑的表现未知
 
 !!! note "输入限制"
-    Hunyuan3D-DiT **不接受文本**输入——仅从单张图像生成形状。文本可间接通过 Paint 引导纹理，但需搭配文生图模型。
+    Hunyuan3D 2.0 主要专注于 **Image-to-3D** 路径，Hunyuan3D-DiT 接收单张图像作为条件输入生成裸网格（bare mesh）。虽然论文未明确讨论 Text-to-3D 路径，但系统整体支持文本引导：文本可直接通过 Hunyuan3D-Paint 模块引导纹理生成，也可搭配文生图模型（如 Stable Diffusion）先生成参考图像，再输入 Hunyuan3D-DiT 进行形状生成。

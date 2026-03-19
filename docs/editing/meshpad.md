@@ -2,7 +2,7 @@
 
 > *MeshPad: Interactive Mesh Generation and Editing via Sketch-Based Atomic Operations on Autoregressive Mesh Models*
 
-MeshPad（2025.03）是一种基于草图的交互式 Mesh 生成与编辑方法。核心思想是在 [MeshAnythingV2](../generation/mesh-generation.md) 自回归 Mesh 生成框架之上，将所有编辑操作分解为两个**原子操作**——**删除（Deletion）**和**添加（Addition）**。用户通过在位图草图上标注保留区域（黑色）与编辑区域（红色），即可驱动模型完成局部几何的精确增删。同时提出 **Vertex-Aligned Speculator** 加速推理，实现 2.16× 提速且无质量损失，使交互式编辑成为可能。
+MeshPad（2025.03）是一种基于草图的交互式 Mesh 生成与编辑方法。核心思想是在 [MeshAnythingV2](../generation/mesh-generation.md) 自回归 Mesh 生成框架之上，将所有编辑操作分解为两个**原子操作**——**删除（Deletion）**和**添加（Addition）**。用户通过在位图草图上标注保留区域（黑色）与编辑区域（红色），即可驱动模型完成局部几何的精确增删。同时提出 **Vertex-Aligned Speculator** 加速推理，实现 2.2× 提速且无质量损失，使交互式编辑成为可能。
 
 ---
 
@@ -125,7 +125,7 @@ MeshPad 的骨干由三个核心组件构成：
 
 ### 效果
 
-- **2.16× 加速**，无质量损失
+- **2.2× 加速**，无质量损失
 - 这个加速幅度足以让编辑从"离线批处理"变为"交互式即时反馈"
 
 ### 为什么联合训练是关键
@@ -213,7 +213,7 @@ Vertex alignment 策略不仅带来了推理加速，还提升了生成质量。
 
 - **原子操作分解**：将复杂编辑还原为删除 + 添加两个清晰子问题，设计简洁
 - **原生 Mesh 输出**：直接生成三角形 Mesh，不需要隐式表示 → Mesh 的中间转换
-- **交互式速度**：Vertex-Aligned Speculator 提供 2.16× 加速，支持实时编辑
+- **交互式速度**：Vertex-Aligned Speculator 提供 2.2× 加速，支持实时编辑
 - **零真实数据依赖**：自监督训练策略完全绕过了编辑数据的获取难题
 - **草图交互直觉**：用户通过黑/红两色草图即可精确表达编辑意图
 

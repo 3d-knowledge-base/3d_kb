@@ -1,6 +1,11 @@
 site_name: 3D Generation & Editing Knowledge Base
-site_description: 3D生成与编辑技术知识库
-site_url: ""
+site_description: 3D 生成与编辑技术知识库——系统梳理表征、生成、编辑与评估方向的核心文献
+site_author: Zhenkui Zhang
+site_url: https://3d-knowledge-base.github.io/3d_kb
+
+repo_name: 3d-knowledge-base/3d_kb
+repo_url: https://github.com/3d-knowledge-base/3d_kb
+edit_uri: edit/master/docs/
 
 theme:
   name: material
@@ -12,22 +17,28 @@ theme:
       accent: indigo
       toggle:
         icon: material/brightness-7
-        name: Switch to dark mode
+        name: 切换到暗色模式
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       primary: indigo
       accent: indigo
       toggle:
         icon: material/brightness-4
-        name: Switch to light mode
+        name: 切换到亮色模式
+  font:
+    text: Noto Sans SC
+    code: JetBrains Mono
   features:
     - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.sections
     - navigation.expand
     - navigation.top
+    - navigation.footer
     - search.suggest
     - search.highlight
     - content.code.copy
+    - content.code.annotate
     - toc.follow
   icon:
     repo: fontawesome/brands/github
@@ -35,7 +46,11 @@ theme:
 markdown_extensions:
   - admonition
   - pymdownx.details
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.arithmatex:
@@ -45,6 +60,11 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.mark
   - pymdownx.critic
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - tables
   - attr_list
   - md_in_html
@@ -56,8 +76,13 @@ extra_javascript:
   - javascripts/mathjax.js
   - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
 
+extra_css:
+  - stylesheets/extra.css
+
 extra:
-  social: []
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/3d-knowledge-base
 
 plugins:
   - search
@@ -69,6 +94,9 @@ nav:
       - 3D Representations: foundations/3d-representations.md
       - SDS: foundations/sds.md
       - Mesh Extraction: foundations/mesh-extraction.md
+      - Marching Cubes: foundations/marching-cubes.md
+      - DMTet: foundations/dmtet.md
+      - FlexiCubes: foundations/flexicubes.md
       - Generative Models: foundations/generative-models.md
   - Generation:
       - generation/index.md
@@ -76,12 +104,33 @@ nav:
       - Mesh Generation: generation/mesh-generation.md
       - Gaussian to Mesh: generation/gaussian-to-mesh.md
       - Scene Generation: generation/scene-generation.md
+      - Paper Notes:
+          - TRELLIS: generation/trellis.md
+          - TRELLIS 2: generation/trellis2.md
+          - Hunyuan3D: generation/hunyuan3d.md
+          - TripoSG: generation/triposg.md
+          - SparseFlex: generation/sparseflex.md
+          - Direct3D-S2: generation/direct3d-s2.md
+          - LATTICE: generation/lattice.md
+          - BPT: generation/bpt.md
+          - FACE: generation/face.md
       - Paper List: generation/paper-list.md
   - Editing:
       - editing/index.md
       - Mesh Editing Landscape: editing/mesh-editing-landscape.md
+      - Native 3D Editing: editing/native-3d-editing.md
       - Editing Challenges: editing/editing-challenges.md
       - Datasets: editing/datasets.md
+      - Paper Notes:
+          - VoxHammer: editing/voxhammer.md
+          - NANO3D: editing/nano3d.md
+          - Easy3E: editing/easy3e.md
+          - Steer3D: editing/steer3d.md
+          - 3DEditVerse: editing/3deditverse.md
+          - PrEditor3D: editing/preditor3d.md
+          - CraftMesh: editing/craftmesh.md
+          - MeshCoder: editing/meshcoder.md
+          - MeshPad: editing/meshpad.md
       - Paper List: editing/paper-list.md
   - Evaluation:
       - evaluation/index.md

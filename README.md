@@ -1,5 +1,7 @@
 # 3D Generation & Editing Knowledge Base
 
+[3D Generation & Editing Knowledge Base](https://3d-knowledge-base.github.io/3d_kb/)
+
 A structured technical knowledge base focusing on modern 3D visual generation, editing, representations, and evaluation methodologies. 
 
 This repository serves as a systematic documentation of core concepts, algorithmic evolutions, and key literature in the rapidly developing field of AI-driven 3D generation.
@@ -17,11 +19,12 @@ This documentation is built with [MkDocs](https://www.mkdocs.org/) and the [Mate
 
 ```bash
 # Install dependencies
-pip install mkdocs-material mkdocs-roamlinks-plugin mkdocs-macros-plugin
+pip install mkdocs-material
 
 # Serve locally
 mkdocs serve
 ```
 
 ---
+
 *Maintained by Zhenkui Zhang*

@@ -22,7 +22,7 @@
 
 ### Steer3D (2025.12) → [详情页](steer3d.md)
 
-前馈式（feed-forward）3D 编辑方法，采用 ControlNet 风格的旁路架构接入 TRELLIS 骨干。训练数据 96K 对，通过双阶段过滤（SigLIP 语义过滤 + GPT-4o 质量过滤）确保数据质量。引入 DPO（Direct Preference Optimization）进一步对齐人类偏好。推理仅需 11.8 秒，是目前最快的原生 3D 编辑方法之一。
+前馈式（feed-forward）3D 编辑方法，采用 ControlNet 风格的旁路架构接入 TRELLIS 骨干。训练数据 96K 对，通过双阶段过滤（Dual-LLM 语义正确性检查 + DreamSim 感知一致性过滤）确保数据质量。引入 DPO（Direct Preference Optimization）进一步对齐人类偏好。推理仅需 11.8 秒，是目前最快的原生 3D 编辑方法之一。
 
 ### Easy3E (2026.02) → [详情页](easy3e.md)
 
