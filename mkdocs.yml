@@ -116,6 +116,7 @@ nav:
           - LATTICE: generation/lattice.md
           - BPT: generation/bpt.md
           - FACE: generation/face.md
+          - Hi3DGen: generation/hi3dgen.md
       - Paper List: generation/paper-list.md
   - Editing:
       - editing/index.md
@@ -133,6 +134,18 @@ nav:
           - CraftMesh: editing/craftmesh.md
           - MeshCoder: editing/meshcoder.md
           - MeshPad: editing/meshpad.md
+          - VecSet-Edit: editing/vecset-edit.md
+          - MVEdit: editing/mvedit.md
+          - Tailor3D: editing/tailor3d.md
+          - Text2Mesh: editing/text2mesh.md
+          - TEXTure: editing/texture.md
+          - ShapeFusion: editing/shapefusion.md
+          - Neural Cages: editing/neural-cages.md
+          - INST-Sculpt: editing/inst-sculpt.md
+          - AnchorFlow: editing/anchorflow.md
+          - Instructive3D: editing/instructive3d.md
+          - Masked LRMs: editing/masked-lrms.md
+          - ShapeLLM-Omni: editing/shapellm-omni.md
       - Paper List: editing/paper-list.md
   - Evaluation:
       - evaluation/index.md

@@ -50,7 +50,7 @@ TRELLIS 的正式续作。引入 O-Voxel 作为更 native 的结构化 3D 资产
 
 提出 one-face-one-token 的自回归 mesh 生成范式：每个三角面片被编码为单个 token，通过 VQ-VAE 学习离散面片码本。相比逐顶点坐标生成（如 MeshGPT），这种面片级 tokenization 缩短序列长度，使高面数 mesh 的自回归生成变得高效。
 
-### Hi3DGen (2025.03)
+### Hi3DGen (2025.03) → [详情页](hi3dgen.md)
 
 基于 TRELLIS 风格骨干的高保真几何生成方法，在几何细节精度上进一步提升。
 

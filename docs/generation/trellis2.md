@@ -52,6 +52,13 @@ O-Voxel 可以理解为一种更原生的结构化 3D 单元表示。
 
 这一步关键，因为它实际上把表示研究从“更容易训练的 latent”推进到了“更像真实 3D asset 的 latent”。
 
+更具体地说，O-Voxel 的“原生”主要体现在两点：
+
+- 它是 `field-free` 的，不再把几何绑定为一个待抽壳的连续场
+- 它同时编码 geometry 和 appearance，而不只是一份 shape latent
+
+论文还特别强调，它支持 opacity 等材质属性，因此不只是颜色贴图，而是更接近完整 PBR asset。
+
 ---
 
 ## SC-VAE
@@ -72,6 +79,34 @@ SC-VAE 的意义就是：
 - 原生性
 - 可扩展性
 - 高保真解码能力
+
+论文里比较关键的定量信息有两条：
+
+- `16x` 空间下采样
+- 一个 `1024^3` fully-textured asset 可压到大约 `9.6K` latent tokens
+
+这两个数字很重要，因为它们说明 TRELLIS 2 并不是单纯追求“表示更原生”，而是同时把 compactness 也做到了较高水平。
+
+---
+
+## 生成系统层面的变化
+
+TRELLIS 2 不只是换了一种 latent，还配套训练了大规模 flow-matching 模型：
+
+- 整体生成模型规模约 `4B` 参数
+- 训练资产规模约 `800K`
+- 形状生成、材质生成分阶段完成
+
+推理效率也比很多人预期更高：
+
+- `512^3` 级别 fully-textured asset 约 `3s`
+- `1024^3` 约 `17s`
+- `1536^3` 约 `60s`
+
+所以 TRELLIS 2 的论文信息量其实有两层：
+
+- 表示上，O-Voxel 更 native
+- 系统上，这种 native latent 依然能被压缩并被大模型有效生成
 
 ---
 
@@ -102,6 +137,8 @@ TRELLIS 2 对后续研究主要启发是：
 - 材质一致性
 - 最终输出 mesh / asset 的工业可用性
 
+论文中的 reconstruction 对比也支持这一点：在相近甚至更少的 token 数下，TRELLIS 2 比 Trellis、Dora、SparseFlex、Direct3D-S2 更能保住复杂几何与材质细节。
+
 ---
 
 ## 与其他方法的关系
@@ -122,6 +159,14 @@ TRELLIS 2 对后续研究主要启发是：
 - BPT / FACE 则在 mesh-native token space 上推进
 
 两者都在追求“更原生”，但方向不同。
+
+---
+
+## 局限
+
+- 尽管 latent 已经更紧凑，但整体系统仍然是大模型路线，训练成本并不低
+- 形状与材质采用分阶段生成，系统复杂度高于单阶段方案
+- O-Voxel 更接近 asset representation，但并不等于直接在最终 mesh 编辑空间里工作
 
 ---
 
