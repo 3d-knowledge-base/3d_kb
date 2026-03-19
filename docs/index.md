@@ -7,7 +7,7 @@ hide:
 
 # 3D Generation & Editing Knowledge Base
 
-<p class="byline">by <strong>Zhenkui Zhang</strong> · 基于 30+ 篇论文的系统梳理</p>
+<p class="byline">by <strong>Zhenkui Zhang</strong> · 2025.03</p>
 
 ---
 
