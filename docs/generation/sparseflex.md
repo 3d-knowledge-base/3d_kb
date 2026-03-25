@@ -80,6 +80,74 @@ SparseFlex 不以多视图图像为主输入，而是更偏几何优先的点云
 
 ---
 
+## 损失函数
+
+SparseFlex 的训练涉及 VAE 和下游生成模型两部分。
+
+### VAE 训练损失
+
+$$
+\mathcal{L}_{VAE} = \mathcal{L}_{recon} + \lambda_{KL}\mathcal{L}_{KL} + \lambda_{render}\mathcal{L}_{render}
+$$
+
+- **几何重建损失** $\mathcal{L}_{recon}$：
+    - SDF 回归损失：预测的 corner SDF 与 GT SDF 之间的 L1/L2 损失
+    - 变形场正则化：deformation vectors 的 L2 范数惩罚，防止过度变形
+    - occupancy 分类损失：self-pruning upsampling 中的 binary cross-entropy
+
+- **KL 正则化** $\mathcal{L}_{KL}$：latent space 的标准 KL 散度正则，保证 latent 分布可采样
+
+- **可微渲染损失** $\mathcal{L}_{render}$（frustum-aware 训练的核心）：
+    - 对当前视角 frustum 内的活跃 voxel 做可微 surface extraction（基于 FlexiCubes）
+    - 渲染后与 GT 多视角图像对比
+    - 包含 mask loss（轮廓）和 depth loss（深度图）
+
+### 生成模型训练
+
+在 VAE latent space 上训练扩散模型（如 DiT），使用标准的去噪损失：
+
+$$
+\mathcal{L}_{diff} = \mathbb{E}_{t, \epsilon}\left[\| \epsilon - \epsilon_\theta(\mathbf{z}_t, t) \|^2\right]
+$$
+
+---
+
+## 架构参数
+
+### Sparse Transformer
+
+- 编码器/解码器均基于 sparse 3D transformer
+- 每层包含 sparse 3D self-attention 和 FFN
+- 上采样使用 sparse transposed convolution + self-pruning（根据 occupancy 预测裁剪非活跃 voxel）
+- 最终输出分辨率可达 $512^3$（部分实验到 $1024^3$），但实际活跃 voxel 数远低于 dense 对应（通常 <1%）
+
+---
+
+## 实验结果
+
+### 主要对比
+
+论文报告了与 FlexiCubes（dense 版本）、DMTet、SDF-based 方法的对比：
+
+| 指标 | SparseFlex 表现 |
+|---|---|
+| Chamfer Distance | 较 dense FlexiCubes 降低约 82%（论文原文） |
+| F-Score | 较 dense FlexiCubes 提升约 88%（论文原文） |
+| 训练显存 | 远低于 dense grid 方法（稀疏存储） |
+| 拓扑支持 | 支持开放表面和内部结构 |
+
+### 训练效率
+
+- frustum-aware sectional voxel training 使得高分辨率（$512^3$+）训练成为可能
+- 相比 dense grid 方法，在同等分辨率下显存降低一个数量级以上
+
+### 重建质量
+
+- 在 Objaverse 数据集上，SparseFlex VAE 的重建保真度优于同分辨率的 dense 方法
+- 对开放表面（如碗、杯子内壁）和复杂拓扑（如链条、网格结构）的建模质量明确优于纯 SDF 方法
+
+---
+
 ## 它为什么重要
 
 SparseFlex 在表示发展线里的独特价值是：

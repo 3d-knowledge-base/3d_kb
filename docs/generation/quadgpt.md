@@ -54,6 +54,80 @@ QuadGPT 的第二个创新是引入了强化学习微调：
 
 ---
 
+## 损失函数
+
+### 预训练阶段
+
+标准 AR 预训练使用 next-token prediction 交叉熵损失：
+
+$$
+\mathcal{L}_{AR} = -\sum_{t=1}^{T} \log p_\theta(x_t \mid x_{<t})
+$$
+
+其中 $x_t$ 是 mesh token 序列中的第 $t$ 个 token（包含面类型标记和顶点坐标）。
+
+### tDPO 微调阶段
+
+tDPO（topology-aware DPO）是在标准 DPO 框架上引入拓扑质量奖励：
+
+$$
+\mathcal{L}_{tDPO} = -\mathbb{E}\left[\log \sigma\left(\beta \log \frac{\pi_\theta(y_w)}{\pi_{ref}(y_w)} - \beta \log \frac{\pi_\theta(y_l)}{\pi_{ref}(y_l)}\right)\right]
+$$
+
+其中 $y_w$ 和 $y_l$ 分别是拓扑质量较高和较低的生成样本，由 topology-aware reward 函数评判。
+
+**拓扑奖励函数**综合以下指标：
+
+- **奇异顶点比例**：非 4-valence 顶点（对于 quad mesh）的比例越低越好
+- **边循环连续性**：edge loop 的完整性和平滑度
+- **面形状质量**：四边面的正方形度（aspect ratio）
+- **流形性**：非流形边和非流形顶点的数量
+
+---
+
+## 架构与训练细节
+
+### 模型架构
+
+- 基于 decoder-only transformer
+- 坐标量化：每个轴 128 级
+- 面类型 token：用特殊 token 区分三角面（3 顶点）和四边面（4 顶点）
+- 位置编码：RoPE
+
+### 训练配置
+
+- **预训练数据**：Objaverse 过滤子集中的 quad-dominant mesh（通过自动 remeshing 工具生成训练数据）
+- 预训练：标准 AR teacher-forcing
+- tDPO 微调：采样多个候选 mesh → 用拓扑奖励函数排序 → 构造偏好对进行 DPO 训练
+
+---
+
+## 实验结果
+
+### 评估设置
+
+- 数据集：ShapeNet（椅子、桌子等类别）和 Objaverse 子集
+- 对比方法：MeshGPT、Nautilus、Instant Meshes（后处理 baseline）
+- 评估指标：Chamfer Distance、Normal Consistency、以及拓扑质量指标（奇异顶点比例、边循环数量）
+
+### 定量结果
+
+| 指标 | QuadGPT 表现 |
+|---|---|
+| Chamfer Distance | 与三角 mesh 方法可比 |
+| Normal Consistency | 与三角 mesh 方法可比 |
+| 奇异顶点比例 | 低于 Instant Meshes 后处理 |
+| 边循环质量 | 优于 Instant Meshes 后处理 |
+| tDPO 提升 | 拓扑指标在微调后有一致改善 |
+
+### 关键发现
+
+- QuadGPT 在几何精度上与三角 mesh 方法持平，同时输出的拓扑结构更符合生产需求
+- tDPO 微调在不降低几何质量的前提下，能有效改善拓扑指标
+- 直接生成 quad mesh 的拓扑质量优于"三角 mesh → remeshing"的两阶段方案
+
+---
+
 ## 为什么值得关注
 
 ### 1. 填补了 quad mesh 生成的空白

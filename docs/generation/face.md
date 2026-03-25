@@ -126,11 +126,76 @@ FACE 代表的其实是一种更进一步的原生化趋势：
 
 ---
 
+## 模型架构细节
+
+| 组件 | 参数 |
+|:-----|:-----|
+| 总参数量 | ~500M |
+| Shape Encoder | 8 层，hidden dim 768 |
+| Face Decoder | 24 层，hidden dim 1024（非对称设计） |
+| VecSet Latent | 2048 tokens，bottleneck dim 64 |
+| 坐标量化 | $[0, 127]$ 离散化 |
+
+非对称 encoder-decoder 设计：encoder 较浅较窄，decoder 较深较宽，因为自回归生成比编码更难。
+
+---
+
+## 损失函数
+
+ARAE 的训练目标是标准的交叉熵损失，直接对 face 内的 9 个离散坐标 token 逐个做分类：
+
+$$
+\mathcal{L} = \frac{1}{N}\sum_{i=1}^{N}\sum_{j=1}^{9} \text{CrossEntropy}(\hat{c}_{i,j},\; c_{i,j})
+$$
+
+- $N$：face 总数
+- $c_{i,j}$：第 $i$ 个 face 的第 $j$ 个坐标 ground truth
+- 端到端训练，无需单独的 VAE 预训练阶段
+
+---
+
+## 训练配置
+
+| 配置 | 参数 |
+|:-----|:-----|
+| ARAE 训练 | 8×A100 (80GB), 100K steps |
+| 优化器 | Muon, lr 6e-4 |
+| 训练数据 | Objaverse ~130K meshes（<4000 faces） |
+| DiT 生成模型 | 350M params, 50K mesh subset |
+| DiT 训练 | 32×A100 (80GB), 400K steps, Euler 100 steps |
+
+---
+
+## 实验结果
+
+### Reconstruction（Tab 2）
+
+| 方法 | HD ↓ (Objaverse) | CD ↓ (Objaverse) | HD ↓ (Toys4K) | CD ↓ (Toys4K) |
+|:-----|:-----------------|:-----------------|:-------------|:-------------|
+| BPT | 0.175 | 0.072 | 0.108 | 0.067 |
+| TreeMeshGPT | 0.119 | 0.061 | 0.098 | 0.055 |
+| MeshAnything V2 | 0.142 | 0.065 | 0.089 | 0.049 |
+| **FACE** | **0.090** | **0.041** | **0.067** | **0.033** |
+
+### 关键设计选择（Ablation）
+
+- Face ordering：ZYX ordering 优于 DFS 和 BFS
+- 坐标解码：CausalMLP 优于 Parallel 和 Attention-based 解码
+- Encoder query：FPS (farthest point sampling) queries 优于 learnable queries
+- 压缩比 0.11，self-attention 理论计算量降低 81×
+
+### Scaling
+
+1.2B large model + 1024 量化级别可进一步提升生成质量。
+
+---
+
 ## 局限
 
 - 仍然是自回归序列建模，复杂拓扑情况下难度依旧不低
 - face 级离散表示仍有量化上限
 - 对极细结构和稀薄部件仍然受输入采样质量影响
+- 训练数据限制在 <4000 faces 的 mesh，高面数模型无法直接处理
 
 ---
 

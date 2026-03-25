@@ -107,6 +107,7 @@ nav:
       - Gaussian to Mesh: generation/gaussian-to-mesh.md
       - Scene Generation: generation/scene-generation.md
       - Paper Notes:
+          - 3DShape2VecSet: generation/3dshape2vecset.md
           - TRELLIS: generation/trellis.md
           - TRELLIS 2: generation/trellis2.md
           - Hunyuan3D: generation/hunyuan3d.md
@@ -114,6 +115,8 @@ nav:
           - SparseFlex: generation/sparseflex.md
           - Direct3D-S2: generation/direct3d-s2.md
           - LATTICE: generation/lattice.md
+          - MeshGPT: generation/meshgpt.md
+          - MeshAnything V2: generation/meshanything-v2.md
           - BPT: generation/bpt.md
           - FACE: generation/face.md
           - Hi3DGen: generation/hi3dgen.md
@@ -126,6 +129,8 @@ nav:
           - OctFusion: generation/octfusion.md
           - VAT: generation/vat.md
           - PartCrafter: generation/partcrafter.md
+          - Fantasia3D: generation/fantasia3d.md
+          - Magic3D: generation/magic3d.md
       - Paper List: generation/paper-list.md
   - Editing:
       - editing/index.md

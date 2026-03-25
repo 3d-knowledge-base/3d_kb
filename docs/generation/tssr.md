@@ -54,9 +54,58 @@ TSSR 的核心设计是将 mesh 生成分为两个阶段：
 
 ### Connection Loss（拓扑约束损失）
 
-- 设计了专门的损失函数，约束生成的面之间的连接关系
-- 惩罚不合理的拓扑结构（如孤立面、非流形边等）
-- 这是一个在训练阶段就施加拓扑先验的方法
+Connection Loss 是 TSSR 的核心技术贡献之一。它在训练阶段对面间的连接关系施加约束：
+
+- **基本思路**：对于预测的 mesh token 序列，检查共享顶点/边的面对之间坐标是否一致
+- **形式化**：设两个相邻面 $f_i$ 和 $f_j$ 共享一条边 $(v_a, v_b)$，Connection Loss 要求两个面中该边的坐标预测完全一致：
+
+$$
+\mathcal{L}_{conn} = \sum_{(f_i, f_j) \in \mathcal{E}} \| \hat{v}_{a}^{(i)} - \hat{v}_{a}^{(j)} \|^2 + \| \hat{v}_{b}^{(i)} - \hat{v}_{b}^{(j)} \|^2
+$$
+
+其中 $\mathcal{E}$ 是面邻接图的边集，$\hat{v}$ 是模型预测的顶点坐标。
+
+- **作用**：惩罚不合理的拓扑结构（如孤立面、非流形边、坐标不连续的共享边）
+- 这是一个在训练阶段就施加拓扑先验的方法，而非后处理修复
+
+---
+
+## 完整损失函数
+
+TSSR 两阶段各自的损失：
+
+### Stage 1: Topology Sculptor
+
+$$
+\mathcal{L}_{topo} = \mathcal{L}_{DDM}^{topo} + \lambda_{conn}\mathcal{L}_{conn}
+$$
+
+- $\mathcal{L}_{DDM}^{topo}$：离散扩散模型的标准 token prediction 损失（在拓扑 token 上），类似 masked language modeling
+- $\mathcal{L}_{conn}$：Connection Loss，约束面间连接关系
+
+### Stage 2: Shape Refiner
+
+$$
+\mathcal{L}_{shape} = \mathcal{L}_{DDM}^{coord}
+$$
+
+- 在已确定的拓扑结构上，对顶点坐标 token 做离散扩散去噪
+- 此阶段拓扑已固定，不再需要 Connection Loss
+
+---
+
+## 架构细节
+
+### Improved Hourglass Architecture
+
+- **编码路径**：逐步降采样 mesh token 序列，提取多尺度特征
+- **解码路径**：逐步上采样，在每一级与编码路径的对应层做 skip connection
+- **注意力机制**：双向全注意力（区别于 AR 的因果注意力），每个 token 可以看到整个序列
+- **位置编码**：face-vertex-sequence 三级 RoPE
+    - face-level RoPE：编码面的全局序号
+    - vertex-level RoPE：编码面内顶点的局部序号（0, 1, 2）
+    - sequence-level RoPE：编码 token 在整个序列中的位置
+- **Hourglass bottleneck**：在最低分辨率层进行全局信息聚合，使得远距离面的拓扑关系能被捕捉
 
 ---
 
@@ -67,6 +116,31 @@ TSSR 报告的关键数字：
 - 最多 **10,000 面**的 mesh 生成（是 Nautilus 5000 面的 2 倍）
 - 空间分辨率 **1024^3**
 - 因为扩散模型并行去噪，不需要像 AR 那样逐 token 生成
+
+### 训练配置
+
+- 训练数据：Objaverse 过滤子集（高质量 artist mesh）
+- 坐标量化分辨率：$1024^3$（10-bit per axis）
+- 去噪步数：论文中对 100-1000 步范围做了实验
+- 两阶段分别训练：先训练 Topology Sculptor 收敛，再训练 Shape Refiner
+
+### 定量实验
+
+论文在 Objaverse 子集上报告了与 MeshGPT、Nautilus 等 AR 方法的对比：
+
+| 指标 | TSSR 表现 |
+|---|---|
+| 面数上限 | **10,000 面**（AR 方法通常 ~5,000） |
+| 空间分辨率 | **$1024^3$**（高于多数 AR 方法的 $128^3$） |
+| 拓扑完整性 | 连通分量数接近 GT，优于 AR baseline |
+| Chamfer Distance | 与 Nautilus 可比 |
+| 生成速度 | 并行去噪，在大面数时比 AR 更快 |
+
+### 定性发现
+
+- 离散扩散在处理对称结构（椅子腿、桌面边缘）时表现更稳定，因为可以全局推理
+- Connection Loss 有效减少了面间裂缝（ablation 表明去除后拓扑质量明显下降）
+- 两阶段解耦使得拓扑错误不会传播到几何精度上
 
 ---
 

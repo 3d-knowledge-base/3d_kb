@@ -79,6 +79,72 @@ DMC 规则确定拓扑连接（保证水密性和流形性）
 
 ---
 
+## 损失函数与训练
+
+### Shape Reconstruction 任务
+
+在 shape reconstruction 评估中，随机采样 1000 个点，比较 ground truth mesh 和提取 mesh 的 SDF 值差异进行优化。
+
+### 等边三角形正则化
+
+为控制输出网格质量，FlexiCubes 可选用边长正则化：
+
+$$
+R_{edge} = \frac{1}{|T|} \sum_{t \in T} \sum_{e_i \in t} (|e_i| - \bar{e})^2, \quad \bar{e} = \frac{1}{|E|}\sum_{e_i \in E} |e_i|
+$$
+
+训练策略：先做 1000 步纯重建优化，再加 300 步重建 + 正则化（正则化权重从 0 线性增到 100）。
+
+---
+
+## 实验结果
+
+### Shape Reconstruction 消融（Tab 3, $64^3$ 网格）
+
+| 配置 | IN>5° ↓ | CD ($10^{-5}$) ↓ | F1 ↑ | ECD ($10^{-2}$) ↓ |
+|:-----|:--------|:-----------------|:-----|:-----------------|
+| DMC centroid | 53.02 | 5.85 | 0.65 | 2.60 |
+| + flex vertex | 40.88 | 5.34 | 0.68 | 0.99 |
+| + grid deform | 39.46 | 5.01 | 0.69 | 0.98 |
+| **+ flex quad split = FlexiCubes** | **34.87** | **4.87** | **0.70** | **0.71** |
+
+每一组参数都带来了明确的质量提升。
+
+### 网格质量对比（Tab 4, $64^3$ + 正则化）
+
+| 方法 | IN>5° ↓ | CD ($10^{-5}$) ↓ | Aspect>4 ↓ | Radius>4 ↓ | Angle<10° ↓ |
+|:-----|:--------|:-----------------|:-----------|:-----------|:------------|
+| MC | 52.37 | 6.33 | 11.71% | 11.71% | 11.84% |
+| DMTet(80) | 48.66 | 5.17 | 17.31% | 16.68% | 17.83% |
+| **FlexiCubes** | **34.87** | **4.87** | **2.93%** | **4.49%** | **2.04%** |
+
+FlexiCubes 的退化三角形比例远低于 MC 和 DMTet。
+
+### Inverse Rendering: nvdiffrec（Tab 5, NeRF Synthetic）
+
+FlexiCubes 与 DMTet 在 PSNR 上相当（约 30-33 dB），但在 Chamfer Distance 上 FlexiCubes 多数场景更优（如 Chair: 0.45 vs 4.51 $\times 10^{-2}$，Ship: 10.5 vs 55.8 $\times 10^{-2}$）。
+
+### 3D 生成: GET3D（Tab 6, ShapeNet FID）
+
+| 方法 | Motorbike ↓ | Chair ↓ | Car ↓ |
+|:-----|:-----------|:--------|:------|
+| DMTet | 48.90 | 22.41 | 10.60 |
+| **FlexiCubes** | **44.87** | **17.51** | **9.55** |
+
+仅修改 GET3D 最后一层以输出 FlexiCubes 参数（21 weights/cube），即可获得 FID 改善。
+
+### 计算开销（Tab 7）
+
+| 方法 | Forward (ms) | Backward (ms) | Memory (MB) | 分辨率 |
+|:-----|:------------|:-------------|:------------|:-------|
+| MC | 2.28 | 0.43 | 12.05 | $64^3$ |
+| DMTet | 2.33 | 1.38 | 22.44 | $64^3$ |
+| **FlexiCubes** | **8.93** | **7.32** | **116.56** | $64^3$ |
+
+FlexiCubes 的灵活性以额外计算和内存为代价（约 4-5× forward、5× backward、5× memory vs DMTet），但在应用级 pipeline（如 nvdiffrec）中总开销增幅可控（307 vs 315 ms/iter）。
+
+---
+
 ## 子体素精度：SLAT 中的 FlexiCubes
 
 在 TRELLIS 的 SLAT（Structured Latent）框架中，FlexiCubes 展现出强大的**子体素精度**能力：
@@ -129,4 +195,4 @@ FlexiCubes 虽然强大，但存在固有的**拓扑局限**：
 
 ## 一句话总结
 
-FlexiCubes 是有智慧的翻译官——通过三组可学习参数（$\alpha/\beta$ 控制顶点位置、$\delta$ 变形网格、$\gamma$ 优化拓扑），将"死板的等值面提取"变成"可微分的几何优化"，是当前 3D 生成 pipeline 的标配组件。
+FlexiCubes 通过三组可学习参数（$\alpha/\beta$ 控制顶点位置、$\delta$ 变形网格、$\gamma$ 优化拓扑），将"死板的等值面提取"变成"可微分的几何优化"，是当前 3D 生成 pipeline 的标配组件。

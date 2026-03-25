@@ -4,11 +4,11 @@ comments: true
 
 # Papers
 
-3D 生成、编辑及相关领域文献索引。当前页收录 **75 篇**论文/方法，按研究方向分类，涵盖 mesh 生成中的 3D 隐空间表征主线与 mesh editing 主线的关键文献。
+3D 生成、编辑及相关领域文献索引。当前页收录 **79 篇**论文/方法，按研究方向分类，涵盖 mesh 生成中的 3D 隐空间表征主线与 mesh editing 主线的关键文献。
 
 ---
 
-## Generation (22)
+## Generation (26)
 
 3D 物体生成方法：从文本/图像到 3D 资产。
 
@@ -38,7 +38,9 @@ comments: true
 
 **UltraShape 1.0** (2512) — 粗到细生成框架 + 严格数据治理，高质量 3D 形状生成。
 
-**3DShape2VecSet** (2301) — 将 3D 形状编码为固定长度潜向量集，用于扩散生成 (SIGGRAPH 2023)。
+**3DShape2VecSet** (2301) — VecSet 路线奠基工作：固定长度 latent vector set (512×32)，cross-attention 解码隐式场，EDM 扩散生成。→ [详情页](generation/3dshape2vecset.md)
+
+**MeshGPT** (2311) — Mesh-native AR 开创：graph convolution VQ-VAE 学面片码本 + decoder-only transformer 自回归生成三角网格 (CVPR 2024)。→ [详情页](generation/meshgpt.md)
 
 **TEXGen** (2411) — 混合 2D-3D 扩散网络，前馈式 UV 纹理生成。
 
@@ -65,6 +67,10 @@ comments: true
 **VAT** (2412) — Variational Tokenizer，250x 压缩（1MB→3.9KB），多尺度隐式层级，适配 LLM 架构的 3D tokenization。
 
 **PartCrafter** (2506) — 首个 part-aware 3D mesh 生成，compositional latent space + 层级注意力，端到端部件分解。
+
+**Fantasia3D** (2306) — DMTet + SDS + PBR 材质解耦，Text-to-3D 几何与外观分离优化 (ICCV 2023)。→ [详情页](generation/fantasia3d.md)
+
+**Magic3D** (2306) — NeRF coarse + DMTet fine 两阶段 coarse-to-fine Text-to-3D (CVPR 2023)。→ [详情页](generation/magic3d.md)
 
 ---
 
@@ -140,7 +146,7 @@ Mesh 重建、补全与结构化处理。
 
 ---
 
-**MeshAnything V2** (2408) — 点云条件自回归 Mesh 生成，产生艺术家风格网格，面数可控。
+**MeshAnything V2** (2408) — Adjacent Mesh Tokenization，利用相邻面共享顶点将序列长度减半，面数 800→1600 (ICCV 2025)。→ [详情页](generation/meshanything-v2.md)
 
 **BPT** (2411) — Blocked and Patchified Tokenization，把 Mesh 序列压缩到约 0.26，使 8k faces 级别训练成为可能。
 
@@ -202,6 +208,7 @@ Mesh 重建、补全与结构化处理。
 - **OctFusion** — 八叉树 latent + 统一多尺度 U-Net，避免 cascaded diffusion
 - **Sparc3D** — 模态一致的纯 3D 稀疏卷积 VAE，消除 2D-3D 转换损失
 - **VAT** — 极端压缩的 variational tokenizer (250x)，对接 LLM 架构
+- **MeshGPT** — mesh-native AR 开山：graph conv VQ-VAE + decoder-only transformer (CVPR 2024)
 - **MeshAnything V2 / BPT / FACE** — mesh-native token 路线，直接把 mesh 本身作为生成对象
 - **Nautilus** — locality-aware tokenization，利用面间拓扑邻接压缩序列，5000 面
 - **MeshRipple** — frontier-aware BFS + sparse-attention global memory，拓扑连贯生成

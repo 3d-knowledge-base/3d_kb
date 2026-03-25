@@ -4,7 +4,7 @@ comments: true
 
 # LATTICE / VoxSet
 
-> *LATTICE / VoxSet*
+> *LATTICE: Democratize High-Fidelity 3D Generation at Scale*
 
 LATTICE 是当前 3D latent representation 文献线里重要的一篇，因为它不只是提出了一个新表示，还把很多争论说清楚了：
 
@@ -43,12 +43,12 @@ VoxSet 可以理解为一种**半结构化 latent**：
 
 > 给定一个位置锚点，生成该位置附近应该出现的几何细节。
 
-因此，VoxSet 的强项恰恰不是“绝对更局部”，而是**更容易被定位和重采样**。
+因此，VoxSet 的强项恰恰不是"绝对更局部"，而是**更容易被定位和重采样**。
 
 论文把这个想法落到两个很具体的设计上：
 
 - `Voxel Queries`：查询点不再直接采样自表面，而是锚定在 coarse voxel center
-- `Query Jitter`：训练时给 query 一个小扰动，缩小训练和测试之间的 query gap
+- `Query Jitter`：训练时给 query 一个小扰动 $\epsilon \sim U[-\frac{1}{2R}, \frac{1}{2R}]$（R 为最小目标分辨率），缩小训练和测试之间的 query gap
 
 这两步的作用都指向同一个目标：让 token 在 test time 也能被稳定定位。
 
@@ -72,13 +72,6 @@ LATTICE 指出这一说法不够准确。
 - sparse voxel 的优势是 token 有天然 anchor
 - 所以决定生成和 scaling 效果的，是 code 是否 **localizable**
 
-这也解释了为什么 VoxSet 会特别强调：
-
-- coarse spatial anchors
-- query jitter
-- position-aware generation
-- test-time scaling
-
 在 LATTICE 里，`localizable` 不只是一个口号，它直接进入了 DiT 的条件设计：
 
 - noisy latent token 会接收基于空间位置的 `RoPE`
@@ -86,60 +79,77 @@ LATTICE 指出这一说法不够准确。
 
 ---
 
-## 它在发展线里的位置
-
-LATTICE 非常适合放在这条线中间理解：
-
-- `3DShape2VecSet`：VecSet，紧凑
-- `TRELLIS / SLAT`：structured latent，空间锚点强
-- **LATTICE / VoxSet**：在 compactness 与 localizability 之间做折中
-- `TRELLIS 2 / O-Voxel`：往更 native 的 3D asset representation 继续推进
-
-所以 VoxSet 的重要性，不只是“提出一个新表示”，而是提供了一个更清晰的比较框架。
-
----
-
 ## 模型管线
 
-LATTICE 采用两阶段生成：
+### VoxSet VAE
 
-1. 先得到 coarse sparse structure
-2. 再在这些 voxel centers 上生成细节几何 latent
+VAE 采用 cross-attention encoder + symmetric decoder 架构：
 
-这和它的表示假设是对齐的：
+- **Encoder**：8 层 self-attention + cross-attention，将 point cloud 压缩为 latent tokens
+- **Decoder**：16 层，SDF grid 坐标作为 cross-attention 的 query
+- 输入点云 $P \in \mathbb{R}^{N \times 7}$（3D 坐标 + 法线 + 锐边标记）
+- 采样策略：均匀采样 + 锐边重要性采样
 
-- 第一阶段解决 `where`
-- 第二阶段解决 `what`
+### 损失函数
 
-论文自己就把这件事描述为把 3D generation 中混在一起的两个难题拆开。
+VAE 训练沿用 Hunyuan3D-2 的设置：
+
+- **SDF reconstruction loss**：对采样点的 SDF 值做回归
+- **KL regularization**：标准 VAE latent 正则化
+
+DiT 采用 **Rectified Flow** (SiT 形式)：
+
+$$
+\mathcal{L}_{flow} = \mathbb{E}_{t, x_0, \epsilon} \| v_\theta(x_t, t, c) - (x_0 - \epsilon) \|^2
+$$
+
+其中 $x_t = tx_0 + (1-t)\epsilon$，$c$ 为图像条件。训练时 10% 概率将条件替换为零（classifier-free guidance）。
+
+### 两阶段生成
+
+1. **Stage 1 — 结构生成**：用现成的预训练模型（如 Hunyuan3D-2 / Trellis）生成 coarse structure，体素化得到 voxel centers
+2. **Stage 2 — 细节几何生成**：VoxSet DiT 在 voxel centers 上生成 latent tokens → VAE decode → Marching Cubes
 
 ---
 
-## 实验上有哪些关键信息
+## 训练配置
 
-### 重建能力
+| 配置 | 参数 |
+|:-----|:-----|
+| 模型规模 | 0.6B / 1.9B / 4.5B |
+| 图像条件 | DINOv2-Giant，输入 1022 分辨率 |
+| Token scaling | 从 1024 逐步扩到 6144 |
+| 优化器 | DeepSpeed ZeRO |
+| Batch size | 最大 2048（适应 GPU 内存） |
+| Base LR | 1e-4 → 逐阶段降至 1e-6 |
 
-在几何重建实验里，LATTICE 随 token 数提升而稳定变好：
+---
 
-- `4096` tokens: `CD 5.321`, `F1 95.31`
-- `8192` tokens: `CD 2.909`, `F1 98.53`
-- `20480` tokens: `CD 1.893`, `F1 99.59`
+## 实验结果
 
-对比里，`Direct3D-S2` 是 `CD 4.987`, `F1 97.46`。这说明 VoxSet 虽然更紧凑，但并没有明显牺牲高保真重建。
+### 重建能力（Tab 1, LATTICE-Bench）
 
-### 生成能力
+| Token 数 | CD ↓ ($\times 10^4$) | F1 ↑ ($\times 10^2$) |
+|:---------|:-----|:----|
+| 4096 | 5.321 | 95.31 |
+| 8192 | 2.909 | 98.53 |
+| 20480 | 1.893 | 99.59 |
 
-论文报告的 `LATTICE-1.9B` 在几项 image-shape alignment 指标上达到或略高于同代方法：
+对比：Direct3D-S2 为 CD 4.987 / F1 97.46。VoxSet 在更紧凑的表示下达到了更高重建质量。
 
-- `ULIP-I = 0.130`
-- `Uni-I = 0.315`
+### 生成能力（Tab 2, LATTICE-1.9B）
 
-这里最值得注意的不是某一个分数，而是它在保持较低训练成本的同时，生成质量仍然能站在第一梯队。
+| 指标 | LATTICE-1.9B |
+|:-----|:-------------|
+| ULIP-I | 0.130 |
+| Uni-I | 0.315 |
 
-### Test-time scaling
+在保持较低训练成本的同时，生成质量站在第一梯队。
 
-- 训练最多使用 `6144` tokens
-- 测试时可以扩到 `12288`、`24576` 甚至更高
+### Test-time Scaling
+
+- 训练最多使用 6144 tokens
+- 测试时可扩到 12288、24576 甚至更高
 - token 增加后细节继续变丰富，而不是很快饱和
 
 这正是 VoxSet 相比普通 VecSet 最核心的系统优势之一。
@@ -162,22 +172,6 @@ LATTICE 采用两阶段生成：
 
 - O-Voxel 更原生、更加 asset-like
 - VoxSet 更偏 compact/localizable compromise
-
-所以 VoxSet 很可能长期作为一个折中方案存在，而不是短期过渡。
-
----
-
-## 为什么值得研究
-
-对后续研究来说，VoxSet 主要的启发是：
-
-- 3D latent 不一定非要高度结构化
-- 也不一定非要完全 set-based 无位置
-- 更合理的方向可能是：
-
-> 用尽量少的结构，让 latent 获得足够强的位置语义。
-
-这对 generation 和 editing 都有意义，因为很多控制任务其实都建立在 token “知道自己大致在哪” 这个前提之上。
 
 ---
 

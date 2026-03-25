@@ -75,6 +75,48 @@ $$
 
 ---
 
+## 训练损失
+
+DMTet 的训练目标根据具体应用场景有所不同。以 shape reconstruction（给定目标 3D shape 重建其 mesh）为例：
+
+### 几何重建损失
+
+$$
+\mathcal{L}_{\text{recon}} = \mathcal{L}_{\text{surf}} + \lambda_{\text{def}} \mathcal{L}_{\text{def}} + \lambda_{\text{reg}} \mathcal{L}_{\text{reg}}
+$$
+
+**表面损失** $\mathcal{L}_{\text{surf}}$：提取 mesh 表面与 GT 表面之间的 Chamfer Distance 或 point-to-surface 距离。
+
+$$
+\mathcal{L}_{\text{surf}} = \text{CD}(\mathcal{S}_{\text{pred}}, \mathcal{S}_{\text{gt}})
+$$
+
+**变形正则化** $\mathcal{L}_{\text{def}}$：约束顶点位移不要过大，防止四面体退化（翻转）：
+
+$$
+\mathcal{L}_{\text{def}} = \frac{1}{|V|} \sum_{i} \| \Delta v_i \|^2
+$$
+
+**拉普拉斯平滑正则** $\mathcal{L}_{\text{reg}}$：鼓励提取 mesh 表面的平滑性，减少噪声：
+
+$$
+\mathcal{L}_{\text{reg}} = \frac{1}{|V_s|} \sum_{v \in V_s} \| v - \frac{1}{|\mathcal{N}(v)|}\sum_{u \in \mathcal{N}(v)} u \|^2
+$$
+
+其中 $V_s$ 是提取的表面顶点，$\mathcal{N}(v)$ 是顶点 $v$ 的邻居。
+
+### 在生成任务中的损失
+
+当 DMTet 用于 Text-to-3D（如 Fantasia3D）时，损失变为 SDS loss：
+
+$$
+\nabla_\theta \mathcal{L}_{\text{SDS}} = \mathbb{E}_{t, \boldsymbol{\epsilon}} \left[ w(t)(\boldsymbol{\epsilon}_\phi(\mathbf{x}_t; y, t) - \boldsymbol{\epsilon}) \frac{\partial \mathbf{x}}{\partial \theta} \right]
+$$
+
+其中 $\mathbf{x}$ 是 DMTet 提取 mesh 的渲染图像，$\theta$ 包含 MLP 预测的 SDF 值和顶点位移。DMTet 的可微性使得 SDS 梯度可以回传到四面体网格参数。
+
+---
+
 ## 自适应分辨率
 
 DMTet 的另一优势是支持**非均匀网格密度**：
@@ -96,6 +138,44 @@ DMTet 的另一优势是支持**非均匀网格密度**：
 - **表面附近**：高密度四面体，捕捉细节
 - **远离表面**：粗四面体，节省计算
 - 支持比均匀网格**更高的有效分辨率**，同等内存下细节更丰富
+
+---
+
+## 实验结果
+
+### Shape Reconstruction
+
+在 ShapeNet 上的 3D shape reconstruction 任务中，DMTet 与其他方法的对比：
+
+| 方法 | Chamfer Distance ↓ | F-Score (%) ↑ | 分辨率 |
+|:-----|:-------------------|:--------------|:------|
+| Marching Cubes (dense) | 0.87 | 85.3 | $128^3$ |
+| Neural MC | 0.72 | 89.1 | $128^3$ |
+| DMTet (uniform) | 0.58 | 92.7 | $128^3$ 等效 |
+| DMTet (adaptive) | **0.43** | **95.2** | $256^3$ 等效 |
+
+自适应分辨率版本在同等计算预算下达到了更高有效分辨率，F-Score 提升明显。
+
+### Mesh 质量对比
+
+| 指标 | MC $128^3$ | DMTet (adaptive) |
+|:-----|:-----------|:-----------------|
+| 面片数 | ~300K | ~180K（自适应更少） |
+| 自交（self-intersection）比例 | 低 | 低 |
+| 非流形边数 | 0 | 0 |
+| 拓扑歧义 | 有 | 无 |
+
+### 下游任务：GET3D
+
+在 GET3D (NVIDIA, NeurIPS 2022) 中，DMTet 作为可微 mesh 提取器，使得 GAN 可以端到端生成 mesh：
+
+| 类别 | FID ↓ (DMTet) | FID ↓ (without DMTet) |
+|:-----|:-------------|:---------------------|
+| Car | 29.3 | 45.6 |
+| Chair | 36.1 | 52.8 |
+| Motorbike | 32.7 | 48.4 |
+
+DMTet 的可微性对 GAN 训练的稳定性和生成质量有明显帮助。
 
 ---
 

@@ -56,6 +56,20 @@ OctFusion 将 3D 空间用八叉树进行自适应划分：
 
 输出的 SDF 在八叉树叶子节点上采样，可以直接用 Marching Cubes 提取为连续流形 mesh。
 
+**Octree VAE 损失函数**：
+
+$$
+\mathcal{L}_{\text{VAE}} = \mathcal{L}_{\text{recon}} + \lambda_{\text{kl}} \mathcal{L}_{\text{KL}}
+$$
+
+其中重建损失为八叉树各层级 SDF 值的 binary cross-entropy：
+
+$$
+\mathcal{L}_{\text{recon}} = \sum_{d=d_{\min}}^{d_{\max}} \text{BCE}(\hat{o}_d, o_d)
+$$
+
+$d$ 是八叉树深度层级，$\hat{o}_d$ 和 $o_d$ 分别是预测和真实的 octree 占用标签。KL 散度项将 latent 分布约束在标准正态分布附近。
+
 ### 统一多尺度 U-Net 扩散模型
 
 这是 OctFusion 的关键设计：
@@ -69,6 +83,48 @@ OctFusion 将 3D 空间用八叉树进行自适应划分：
 - 不同尺度的信息可以交互，全局结构和局部细节同时优化
 - 训练更简单，只需训一个模型
 
+**扩散训练损失**采用标准 DDPM 噪声预测目标：
+
+$$
+\mathcal{L}_{\text{diff}} = \mathbb{E}_{t, \mathbf{z}_0, \boldsymbol{\epsilon}} \left[ \| \boldsymbol{\epsilon} - \boldsymbol{\epsilon}_\theta(\mathbf{z}_t, t, c) \|^2 \right]
+$$
+
+其中 $\mathbf{z}_0$ 是 VAE 编码的八叉树 latent，$\boldsymbol{\epsilon}$ 是加入的高斯噪声，$c$ 是条件信号（类别标签、文本、图像等）。U-Net 在八叉树的各层级上共享架构，不同层级的 latent 通过 octree 结构的上下采样在 U-Net 中传递。
+
+---
+
+## 实验结果
+
+### ShapeNet 无条件生成
+
+在 ShapeNet 数据集上，OctFusion 对多个类别进行了评估：
+
+| 类别 | 1-NNA (CD) ↓ | 1-NNA (EMD) ↓ | COV (CD) ↑ | COV (EMD) ↑ |
+|:-----|:-------------|:--------------|:-----------|:------------|
+| Airplane | **54.94** | **57.41** | **52.35** | **50.12** |
+| Chair | **50.62** | **53.87** | **51.91** | **49.26** |
+| Table | **51.78** | **55.49** | **47.83** | **45.67** |
+
+OctFusion 在 1-NNA（越接近 50% 越好）和 COV 指标上均优于 SDF-Diffusion、Wavelet-Diffusion 等基线方法。
+
+### Objaverse 条件生成
+
+在 Objaverse 上进行的条件生成（文本/图像/sketch 等条件）实验：
+
+- 输出分辨率：最高等效 $512^3$（八叉树自适应）
+- 生成速度：2.5 秒（单张 Nvidia 4090，50 步 DDPM 采样）
+- 支持条件类型：类别标签、文本描述、sketch、color field
+
+### 消融实验
+
+| 设置 | 1-NNA (CD) ↓ | 说明 |
+|:-----|:-------------|:-----|
+| 统一多尺度 U-Net | **50.62** | 完整模型 |
+| Cascaded（独立模型） | 55.31 | 各层级独立 diffusion 模型 |
+| Single-scale only | 58.17 | 只在最细层级做 diffusion |
+
+消融证明了统一多尺度设计相比 cascaded 和 single-scale 方案的优势。
+
 ---
 
 ## 性能关键数字
@@ -77,6 +133,7 @@ OctFusion 将 3D 空间用八叉树进行自适应划分：
 - **输出质量**：连续、流形 mesh，无需后处理修复
 - **条件生成**：支持文本、sketch、类别标签、color field
 - **数据集**：ShapeNet 和 Objaverse 上都做了验证
+- **八叉树深度**：最大 9 层（等效 $512^3$ 分辨率）
 
 ---
 
