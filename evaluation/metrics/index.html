@@ -1,0 +1,4672 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="3D 生成与编辑技术知识库——系统梳理表征、生成、编辑与评估方向的核心文献">
+      
+      
+        <meta name="author" content="Zhenkui Zhang">
+      
+      
+        <link rel="canonical" href="https://3d-knowledge-base.github.io/3d_kb/evaluation/metrics/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../benchmarks/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Metrics - 3D Generation & Editing Knowledge Base</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+SC:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Noto Sans SC";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#metrics" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="3D Generation &amp; Editing Knowledge Base" class="md-header__button md-logo" aria-label="3D Generation & Editing Knowledge Base" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            3D Generation & Editing Knowledge Base
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Metrics
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到暗色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到暗色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到亮色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到亮色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/3d-knowledge-base/3d_kb" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    3d-knowledge-base/3d_kb
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../foundations/" class="md-tabs__link">
+          
+  
+  
+  Foundations
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../generation/" class="md-tabs__link">
+          
+  
+  
+  Generation
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../editing/" class="md-tabs__link">
+          
+  
+  
+  Editing
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  Evaluation
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../papers/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Papers
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="3D Generation &amp; Editing Knowledge Base" class="md-nav__button md-logo" aria-label="3D Generation & Editing Knowledge Base" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    3D Generation & Editing Knowledge Base
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/3d-knowledge-base/3d_kb" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    3d-knowledge-base/3d_kb
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Foundations
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Foundations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../foundations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../foundations/3d-representations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3D Representations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../foundations/sds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SDS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../foundations/mesh-extraction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mesh Extraction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../foundations/marching-cubes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Marching Cubes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../foundations/dmtet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DMTet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../foundations/flexicubes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FlexiCubes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../foundations/generative-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generative Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Generation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/latent-space-representations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3D Latent Space Representations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/mesh-generation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mesh Generation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/gaussian-to-mesh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian to Mesh
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/scene-generation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scene Generation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paper Notes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Paper Notes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/3dshape2vecset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3DShape2VecSet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/trellis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TRELLIS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/trellis2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TRELLIS 2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/hunyuan3d/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hunyuan3D
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/triposg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TripoSG
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/sparseflex/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SparseFlex
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/direct3d-s2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Direct3D-S2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/lattice/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LATTICE
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/meshgpt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MeshGPT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/meshanything-v2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MeshAnything V2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/bpt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    BPT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/face/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FACE
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/hi3dgen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hi3DGen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/lato/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LATO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/nautilus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Nautilus
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/quadgpt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    QuadGPT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/tssr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TSSR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/meshripple/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MeshRipple
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/sparc3d/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sparc3D
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/octfusion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OctFusion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/vat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VAT
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/partcrafter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PartCrafter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/fantasia3d/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Fantasia3D
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/magic3d/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Magic3D
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../generation/paper-list/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paper List
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Editing
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Editing
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Editing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editing/mesh-editing-landscape/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mesh Editing Landscape
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editing/native-3d-editing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Native 3D Editing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editing/editing-challenges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Editing Challenges
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editing/datasets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Datasets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paper Notes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Paper Notes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editing/voxhammer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VoxHammer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editing/nano3d/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    NANO3D
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editing/easy3e/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Easy3E
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editing/steer3d/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Steer3D
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editing/3deditverse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3DEditVerse
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editing/preditor3d/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PrEditor3D
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editing/craftmesh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CraftMesh
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editing/meshcoder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MeshCoder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editing/meshpad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MeshPad
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editing/vecset-edit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VecSet-Edit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editing/mvedit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MVEdit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editing/tailor3d/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tailor3D
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editing/text2mesh/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Text2Mesh
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editing/texture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    TEXTure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editing/shapefusion/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ShapeFusion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editing/neural-cages/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Neural Cages
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editing/inst-sculpt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    INST-Sculpt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editing/anchorflow/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AnchorFlow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editing/instructive3d/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Instructive3D
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editing/masked-lrms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Masked LRMs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editing/shapellm-omni/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ShapeLLM-Omni
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../editing/paper-list/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paper List
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Evaluation
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Evaluation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Evaluation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Metrics
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-condition-alignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 条件对齐度 (Condition Alignment)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-preservation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 保留度 (Preservation)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 保留度 (Preservation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 保留度指标总览
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 保留机制分类
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 保留机制分类">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mask" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        显式融合（需要 mask / 区域信息）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mask_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        隐式保留（不需要用户输入 mask）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        两类机制对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 各论文保留度评估方法对比
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 各论文保留度评估方法对比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3d-mask-voxhammer-edit3d-bench" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基于 3D mask 的指标（VoxHammer Edit3D-Bench）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基于语义的指标
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        用户研究
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 姿态/形变编辑的保留度指标
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4 姿态/形变编辑的保留度指标">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lbo-shapedna" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LBO 频谱距离（ShapeDNA）— 全局指标
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hks-chamfer-distance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HKS 特征空间 Chamfer Distance — 分布级指标
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 保留度评估的局限性
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-geometry-quality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 几何质量 (Geometry Quality)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-appearance-texture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 外观/纹理质量 (Appearance &amp; Texture)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-overall-quality-realism" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 整体质量与真实感 (Overall Quality &amp; Realism)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-efficiency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 效率 (Efficiency)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 场景级指标
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 参数量与训练算力
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 参数量与训练算力">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 总览
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-trellis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 TRELLIS 模块参数量
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-trellis-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 TRELLIS 2 模块参数量
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#84" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4 推理速度对比
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.4 推理速度对比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3d-voxhammer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3D 编辑方法（VoxHammer 基准）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anchorflow-hunyuan3d-21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AnchorFlow 基准（基于 Hunyuan3D 2.1）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        论文专用指标组合
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="论文专用指标组合">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#voxhammer-edit3d-bench" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VoxHammer (Edit3D-Bench)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preditor3d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PrEditor3D
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#meshpad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MeshPad
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../benchmarks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benchmarks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../paper-list/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paper List
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Papers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-condition-alignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 条件对齐度 (Condition Alignment)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-preservation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 保留度 (Preservation)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 保留度 (Preservation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 保留度指标总览
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 保留机制分类
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 保留机制分类">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mask" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        显式融合（需要 mask / 区域信息）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mask_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        隐式保留（不需要用户输入 mask）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        两类机制对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 各论文保留度评估方法对比
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 各论文保留度评估方法对比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3d-mask-voxhammer-edit3d-bench" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基于 3D mask 的指标（VoxHammer Edit3D-Bench）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基于语义的指标
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        用户研究
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 姿态/形变编辑的保留度指标
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4 姿态/形变编辑的保留度指标">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lbo-shapedna" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LBO 频谱距离（ShapeDNA）— 全局指标
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hks-chamfer-distance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HKS 特征空间 Chamfer Distance — 分布级指标
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 保留度评估的局限性
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-geometry-quality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 几何质量 (Geometry Quality)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-appearance-texture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 外观/纹理质量 (Appearance &amp; Texture)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-overall-quality-realism" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 整体质量与真实感 (Overall Quality &amp; Realism)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-efficiency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 效率 (Efficiency)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 场景级指标
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 参数量与训练算力
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 参数量与训练算力">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 总览
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-trellis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 TRELLIS 模块参数量
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-trellis-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 TRELLIS 2 模块参数量
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#84" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4 推理速度对比
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.4 推理速度对比">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3d-voxhammer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3D 编辑方法（VoxHammer 基准）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anchorflow-hunyuan3d-21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AnchorFlow 基准（基于 Hunyuan3D 2.1）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        论文专用指标组合
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="论文专用指标组合">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#voxhammer-edit3d-bench" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VoxHammer (Edit3D-Bench)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preditor3d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PrEditor3D
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#meshpad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MeshPad
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/3d-knowledge-base/3d_kb/edit/master/docs/evaluation/metrics.md" title="编辑此页" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="metrics">Metrics<a class="headerlink" href="#metrics" title="Permanent link">&para;</a></h1>
+<p>3D 生成与编辑的评估指标汇总。按评估维度组织，标注各指标的使用论文与优劣判断方向。</p>
+<hr />
+<h2 id="1-condition-alignment">1. 条件对齐度 (Condition Alignment)<a class="headerlink" href="#1-condition-alignment" title="Permanent link">&para;</a></h2>
+<p>衡量生成/编辑结果与输入条件（文本、图像、草图）的匹配程度。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">评估内容</th>
+<th style="text-align: left;">使用论文</th>
+<th style="text-align: center;">方向</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Directional CLIP Score (CLIPdir)</strong></td>
+<td style="text-align: left;">文本指令变化方向与 3D 模型渲染图在特征空间中变化方向的一致性</td>
+<td style="text-align: left;">PrEditor3D</td>
+<td style="text-align: center;">↑</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CLIP Score / CLIP-T</strong></td>
+<td style="text-align: left;">编辑后模型渲染图与目标文本的语义相似度</td>
+<td style="text-align: left;">VoxHammer, Hunyuan3D 2.0, TRELLIS, MeshPad</td>
+<td style="text-align: center;">↑</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>DINO Image Similarity (DINO-I)</strong></td>
+<td style="text-align: left;">图像驱动编辑中，3D 模型渲染图与用户提供的 2D 目标图像的相似度</td>
+<td style="text-align: left;">VoxHammer</td>
+<td style="text-align: center;">↑</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ULIP / Uni3D</strong></td>
+<td style="text-align: left;">生成 3D 模型与给定条件的跨模态语义和结构相似性（T: 文本, I: 图像子类型）</td>
+<td style="text-align: left;">Hunyuan3D 2.0</td>
+<td style="text-align: center;">↑</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GPTEval3D / User Study (匹配度)</strong></td>
+<td style="text-align: left;">人类或 GPT-4V 主观判断编辑结果符合指令的程度</td>
+<td style="text-align: left;">PrEditor3D, VoxHammer, MeshPad</td>
+<td style="text-align: center;">↑</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-preservation">2. 保留度 (Preservation)<a class="headerlink" href="#2-preservation" title="Permanent link">&para;</a></h2>
+<p>衡量编辑过程中<strong>未编辑区域</strong>的保持程度——3D 编辑的核心难题。</p>
+<h3 id="21">2.1 保留度指标总览<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">评估内容</th>
+<th style="text-align: left;">使用论文</th>
+<th style="text-align: center;">方向</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Masked Chamfer Distance (CD)</strong></td>
+<td style="text-align: left;">未编辑区域点云在编辑前后的几何形状保持</td>
+<td style="text-align: left;">VoxHammer, PrEditor3D</td>
+<td style="text-align: center;">↓</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Masked LPIPS / PSNR / SSIM</strong></td>
+<td style="text-align: left;">渲染图上未编辑区域的外观、纹理和结构保留</td>
+<td style="text-align: left;">VoxHammer</td>
+<td style="text-align: center;">LPIPS: ↓, PSNR/SSIM: ↑</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CLIPdiff-noedit</strong></td>
+<td style="text-align: left;">未编辑区域在编辑前后的 CLIP 分数变化（语义内容保持）</td>
+<td style="text-align: left;">PrEditor3D</td>
+<td style="text-align: center;">↓</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Masked 指标的意义</p>
+<p>保留度指标通过掩码仅计算未编辑区域，是衡量编辑方法「泄露」程度的直接度量。Masked CD 衡量几何保持，Masked LPIPS 衡量视觉保持，CLIPdiff-noedit 衡量语义保持。</p>
+</div>
+<h3 id="22">2.2 保留机制分类<a class="headerlink" href="#22" title="Permanent link">&para;</a></h3>
+<p>各方法在技术上通过不同机制实现未编辑区域的保留，大体分为两类。</p>
+<h4 id="mask">显式融合（需要 mask / 区域信息）<a class="headerlink" href="#mask" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">论文</th>
+<th style="text-align: left;">机制</th>
+<th style="text-align: left;">技术细节</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>VoxHammer</strong></td>
+<td style="text-align: left;">DDIM 反演 + KV Cache Replacement</td>
+<td style="text-align: left;">对源 mesh 做 DDIM 反演，缓存未编辑区域的 KV 特征；去噪阶段将未编辑区域的 KV 替换回缓存值</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>PrEditor3D</strong></td>
+<td style="text-align: left;">双路重建 + Copy-Paste 融合</td>
+<td style="text-align: left;">同时重建源 mesh 和编辑后 mesh 的 3D 特征网格，根据 2D 编辑 mask 反投影得到的 3D mask 进行区域级 copy-paste</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CraftMesh</strong></td>
+<td style="text-align: left;">Poisson 几何 + 纹理融合</td>
+<td style="text-align: left;">几何层面将编辑部件无缝嫁接到源 mesh 上，纹理层面在边界处混合颜色</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Easy3E</strong></td>
+<td style="text-align: left;">轨迹级分离</td>
+<td style="text-align: left;">编辑区域沿编辑轨迹采样，非编辑区域沿源轨迹采样，通过轮廓引导确定编辑 voxel</td>
+</tr>
+</tbody>
+</table>
+<h4 id="mask_1">隐式保留（不需要用户输入 mask）<a class="headerlink" href="#mask_1" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">论文</th>
+<th style="text-align: left;">机制</th>
+<th style="text-align: left;">技术细节</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>NANO3D</strong></td>
+<td style="text-align: left;">Voxel-Merge + Slat-Merge 双层融合</td>
+<td style="text-align: left;">通过体素级 XOR 差异自动计算伪 mask，在 Voxel 和 SLAT 特征层分别融合</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>3DEditVerse</strong></td>
+<td style="text-align: left;">DualAttn + Time-Adaptive Gating</td>
+<td style="text-align: left;">两种 3D 特征并行交叉注意力融合，门控系数随去噪时间步动态调节保留/编辑平衡</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Native 3D Editing</strong></td>
+<td style="text-align: left;">Token Concatenation</td>
+<td style="text-align: left;">将源 mesh 的 SLAT token 与噪声 token 拼接，通过全自注意力交互。消融实验证明优于 Cross-Attention</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Steer3D</strong></td>
+<td style="text-align: left;">ControlNet bypass</td>
+<td style="text-align: left;">在 TRELLIS 主干旁加 ControlNet 分支注入源 mesh 信息，通过 DPO 部分缓解保留性不足</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AnchorFlow</strong></td>
+<td style="text-align: left;">Latent Anchor Consistency</td>
+<td style="text-align: left;">全局 latent anchor 对齐源/目标轨迹，anchor-alignment loss 隐式约束非编辑区域 latent 一致性</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_1">两类机制对比<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">类别</th>
+<th style="text-align: left;">代表方法</th>
+<th style="text-align: left;">优势</th>
+<th style="text-align: left;">劣势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">显式融合</td>
+<td style="text-align: left;">VoxHammer, PrEditor3D, CraftMesh</td>
+<td style="text-align: left;">保留度高，可量化控制</td>
+<td style="text-align: left;">需要精确 3D mask，工作流复杂</td>
+</tr>
+<tr>
+<td style="text-align: left;">隐式/自动融合</td>
+<td style="text-align: left;">3DEditVerse, Native 3D Editing, NANO3D, AnchorFlow</td>
+<td style="text-align: left;">不需要用户 mask，端到端</td>
+<td style="text-align: left;">保留程度依赖内部机制，部分方法可能出现编辑泄露</td>
+</tr>
+</tbody>
+</table>
+<h3 id="23">2.3 各论文保留度评估方法对比<a class="headerlink" href="#23" title="Permanent link">&para;</a></h3>
+<p>各论文的保留度评估分为<strong>基于 2D 渲染图</strong>和<strong>基于 3D 点云/网格</strong>两类。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">论文</th>
+<th style="text-align: left;">2D 指标</th>
+<th style="text-align: left;">渲染视角数</th>
+<th style="text-align: left;">3D 指标</th>
+<th style="text-align: left;">采样点数</th>
+<th style="text-align: left;">评估类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>VoxHammer</strong></td>
+<td style="text-align: left;">Masked PSNR / SSIM / LPIPS, FID, FVD, DINO-I, CLIP-T</td>
+<td style="text-align: left;">未明确</td>
+<td style="text-align: left;">Masked CD</td>
+<td style="text-align: left;">未明确</td>
+<td style="text-align: left;">显式 mask-based（2D+3D）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>3DEditVerse</strong></td>
+<td style="text-align: left;">PSNR, SSIM, LPIPS, DINO-I</td>
+<td style="text-align: left;">10 个固定视角</td>
+<td style="text-align: left;">CD, NC, F1^0.01</td>
+<td style="text-align: left;">100,000 点</td>
+<td style="text-align: left;">无独立保留度指标，整体对比 GT</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Steer3D</strong></td>
+<td style="text-align: left;">LPIPS</td>
+<td style="text-align: left;">6 个视角</td>
+<td style="text-align: left;">CD, F1 (阈值 0.05)</td>
+<td style="text-align: left;">10,000 点</td>
+<td style="text-align: left;">无独立保留度指标，整体对比 GT</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>PrEditor3D</strong></td>
+<td style="text-align: left;">CLIPdiff-noedit, GPTEval3D</td>
+<td style="text-align: left;">未明确</td>
+<td style="text-align: left;">CD（消融实验）</td>
+<td style="text-align: left;">未明确</td>
+<td style="text-align: left;">语义级（CLIPdiff-noedit）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Native 3D Editing</strong></td>
+<td style="text-align: left;">FID, FVD, CLIP</td>
+<td style="text-align: left;">未明确</td>
+<td style="text-align: left;">无</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">无独立保留度指标</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Easy3E</strong></td>
+<td style="text-align: left;">CLIP-T, DINO-I, LPIPS, FID</td>
+<td style="text-align: left;">未明确</td>
+<td style="text-align: left;">无</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">无独立保留度指标</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NANO3D</strong></td>
+<td style="text-align: left;">FID, DINO-I</td>
+<td style="text-align: left;">未明确</td>
+<td style="text-align: left;">CD</td>
+<td style="text-align: left;">未明确</td>
+<td style="text-align: left;">用户研究（95% 形状保留偏好）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>MeshPad</strong></td>
+<td style="text-align: left;">LPIPS, CLIP, FID</td>
+<td style="text-align: left;">未明确</td>
+<td style="text-align: left;">CD</td>
+<td style="text-align: left;">未明确</td>
+<td style="text-align: left;">用户研究 EC（编辑一致性）</td>
+</tr>
+</tbody>
+</table>
+<details class="info">
+<summary>具体保留度指标详解</summary>
+<h4 id="3d-mask-voxhammer-edit3d-bench">基于 3D mask 的指标（VoxHammer Edit3D-Bench）<a class="headerlink" href="#3d-mask-voxhammer-edit3d-bench" title="Permanent link">&para;</a></h4>
+<p>VoxHammer 提出了 Edit3D-Bench（100 模型 × 3 指令 = 300 编辑任务），每个样本包含人工标注的 3D 编辑区域 mask。</p>
+<ul>
+<li><strong>Masked CD</strong>（3D 指标）：仅在未编辑区域的点云上计算 Chamfer Distance</li>
+<li><strong>Masked PSNR / SSIM / LPIPS</strong>（2D 指标）：将 3D mask 投影到各渲染视角得到 2D mask，仅在非 mask 区域计算</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">评估维度</th>
+<th style="text-align: center;">方向</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Masked CD</td>
+<td style="text-align: left;">几何保留</td>
+<td style="text-align: center;">↓</td>
+</tr>
+<tr>
+<td style="text-align: left;">Masked PSNR</td>
+<td style="text-align: left;">像素级外观保留</td>
+<td style="text-align: center;">↑</td>
+</tr>
+<tr>
+<td style="text-align: left;">Masked SSIM</td>
+<td style="text-align: left;">结构级外观保留</td>
+<td style="text-align: center;">↑</td>
+</tr>
+<tr>
+<td style="text-align: left;">Masked LPIPS</td>
+<td style="text-align: left;">感知级外观保留</td>
+<td style="text-align: center;">↓</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_2">基于语义的指标<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>CLIPdiff-noedit</strong>（PrEditor3D）：计算未编辑区域在编辑前后的 CLIP 分数变化。值越低表示语义内容保持越好。不需要精确像素级 mask</li>
+</ul>
+<h4 id="_3">用户研究<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>EC（Edit Consistency）</strong>（MeshPad）：用户对编辑一致性打分（1-5）</li>
+<li><strong>Shape Preservation preference</strong>（NANO3D）：A/B 对比，用户选择哪个方法更好地保留了形状</li>
+</ul>
+</details>
+<h3 id="24">2.4 姿态/形变编辑的保留度指标<a class="headerlink" href="#24" title="Permanent link">&para;</a></h3>
+<p>对于姿态/形变编辑（如"人物举起手臂"），上述基于 mask 的保留度指标<strong>全部失效</strong>：整个 mesh 都在移动，无法划定"未编辑区域"。但"保留度"仍然有意义——五官、衣服纹理、身体比例应该不变。</p>
+<p>合理的姿态变化在微分几何中属于<strong>近似等距变形</strong>（isometric deformation）——表面弯曲但不拉伸。基于此性质，可用内在几何不变量评估保留度。</p>
+<h4 id="lbo-shapedna">LBO 频谱距离（ShapeDNA）— 全局指标<a class="headerlink" href="#lbo-shapedna" title="Permanent link">&para;</a></h4>
+<p>比较源 mesh 和预测 mesh 的 Laplace-Beltrami 算子特征值序列。特征值按大小排序，天然对齐，不需要顶点对应关系，不需要相同拓扑。</p>
+<div class="arithmatex">\[d_{\text{spectral}}(M_1, M_2) = \left\| \frac{\lambda^{(1)}}{\text{Area}(M_1)} - \frac{\lambda^{(2)}}{\text{Area}(M_2)} \right\|_2\]</div>
+<p>其中 <span class="arithmatex">\(\lambda^{(i)} = (\lambda_1^{(i)}, \lambda_2^{(i)}, \ldots, \lambda_K^{(i)})\)</span> 是前 K 个 LBO 特征值，除以表面积做尺度归一化。</p>
+<p>特点：</p>
+<ul>
+<li>输出一个标量，衡量全局内在形状是否保持</li>
+<li>不需要顶点对应，不需要相同拓扑，不需要 mask</li>
+<li>低特征值（前 10–20 个）反映全局形状，高特征值反映局部细节</li>
+</ul>
+<h4 id="hks-chamfer-distance">HKS 特征空间 Chamfer Distance — 分布级指标<a class="headerlink" href="#hks-chamfer-distance" title="Permanent link">&para;</a></h4>
+<p>Heat Kernel Signature（HKS）是逐顶点的内在几何描述符，对等距变形不变。由于生成式方法输出的 mesh 拓扑通常不同，无法逐顶点比较，因此在 HKS 特征空间（而非 XYZ 坐标空间）计算 Chamfer Distance。</p>
+<div class="arithmatex">\[\text{HKS-CD}(M_1, M_2) = \frac{1}{|V_1|} \sum_{v \in V_1} \min_{u \in V_2} \|h(v) - h(u)\|^2 + \frac{1}{|V_2|} \sum_{u \in V_2} \min_{v \in V_1} \|h(u) - h(v)\|^2\]</div>
+<p>其中 <span class="arithmatex">\(h(v) \in \mathbb{R}^S\)</span> 是顶点 <span class="arithmatex">\(v\)</span> 的 HKS 描述子向量（S 个时间尺度）。</p>
+<p>特点：</p>
+<ul>
+<li>不需要顶点对应关系和相同拓扑</li>
+<li>衡量"局部几何特征的分布是否一致"</li>
+<li>对称物体的左右对称部位 HKS 相同，Chamfer 会互相匹配</li>
+</ul>
+<h3 id="25">2.5 保留度评估的局限性<a class="headerlink" href="#25" title="Permanent link">&para;</a></h3>
+<p>所有现有保留度指标都有一个核心假设：<strong>能够确定"哪里被编辑了，哪里没被编辑"</strong>。</p>
+<ul>
+<li>Masked CD/PSNR/SSIM/LPIPS 需要显式 3D mask</li>
+<li>CLIPdiff-noedit 需要区分编辑/非编辑区域</li>
+<li>用户研究依赖人类主观判断</li>
+</ul>
+<p>对于姿态/形变编辑，基于 mask 的方法失效。基于内在几何的指标（ShapeDNA, HKS-CD）提供了一种补充方案，但也有局限：</p>
+<ol>
+<li><strong>生成式方法不保证等距变形</strong>：TRELLIS 等模型从隐空间解码生成 mesh，即使姿态编辑正确，解码器也可能引入局部拉伸/压缩</li>
+<li><strong>更适合方法间比较而非绝对评分</strong>：ShapeDNA 和 HKS-CD 的绝对值难以直接解释，但作为横向对比指标有效</li>
+<li><strong>LBO 对 mesh 分辨率敏感</strong>：不同分辨率的 mesh 高阶特征值差异较大，建议在计算前统一重采样或只使用前 20–30 个低阶特征值</li>
+<li><strong>非等距形变会被检测到</strong>：如果编辑指令本身就改变内在几何（如"变胖"），高 ShapeDNA 距离不代表保留度差，需要根据编辑类型分别解读</li>
+</ol>
+<hr />
+<h2 id="3-geometry-quality">3. 几何质量 (Geometry Quality)<a class="headerlink" href="#3-geometry-quality" title="Permanent link">&para;</a></h2>
+<p>衡量 3D 形状的整体质量——重建保真度与生成质量。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">评估内容</th>
+<th style="text-align: left;">使用论文</th>
+<th style="text-align: center;">方向</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Chamfer Distance (CD)</strong></td>
+<td style="text-align: left;">两个点云间的平均距离，评估整体形状相似度</td>
+<td style="text-align: left;">TRELLIS, VoxHammer, PrEditor3D, MeshPad</td>
+<td style="text-align: center;">↓</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Edge Chamfer Distance (ECD)</strong></td>
+<td style="text-align: left;">尖锐边缘和角点附近采样点云间的 CD，评估细节保持</td>
+<td style="text-align: left;">MeshAnything</td>
+<td style="text-align: center;">↓</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>V-IoU (Volume IoU)</strong></td>
+<td style="text-align: left;">重建模型与原始模型的体积重合度（宏观轮廓准确性）</td>
+<td style="text-align: left;">Hunyuan3D 2.0</td>
+<td style="text-align: center;">↑</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>S-IoU (Surface IoU)</strong></td>
+<td style="text-align: left;">重建模型与原始模型的表面贴合度（精细细节敏感）</td>
+<td style="text-align: left;">Hunyuan3D 2.0</td>
+<td style="text-align: center;">↑</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>F-score</strong></td>
+<td style="text-align: left;">两个形状的表面重合度（精确率+召回率）</td>
+<td style="text-align: left;">TRELLIS, X-Part</td>
+<td style="text-align: center;">↑</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Normal Consistency (NC)</strong></td>
+<td style="text-align: left;">网格表面法线质量，反映平滑度和细节</td>
+<td style="text-align: left;">MeshAnything</td>
+<td style="text-align: center;">↑</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-appearance-texture">4. 外观/纹理质量 (Appearance &amp; Texture)<a class="headerlink" href="#4-appearance-texture" title="Permanent link">&para;</a></h2>
+<p>衡量表面外观的视觉质量。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">评估内容</th>
+<th style="text-align: left;">使用论文</th>
+<th style="text-align: center;">方向</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>LPIPS</strong></td>
+<td style="text-align: left;">基于深度神经网络的感知相似度（模拟人类视觉系统）</td>
+<td style="text-align: left;">TRELLIS, Hunyuan3D 2.0, MeshPad, VoxHammer</td>
+<td style="text-align: center;">↓</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>LPIPS-N</strong></td>
+<td style="text-align: left;">法线图上的感知相似度（评估表面细节）</td>
+<td style="text-align: left;">TRELLIS</td>
+<td style="text-align: center;">↓</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>PSNR</strong></td>
+<td style="text-align: left;">逐像素差异，经典图像质量指标</td>
+<td style="text-align: left;">TRELLIS</td>
+<td style="text-align: center;">↑</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>PSNR-N</strong></td>
+<td style="text-align: left;">法线图上的 PSNR（表面细节重建保真度）</td>
+<td style="text-align: left;">TRELLIS</td>
+<td style="text-align: center;">↑</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CMMD</strong></td>
+<td style="text-align: left;">CLIP 特征空间中两组图像的分布距离（对细节敏感）</td>
+<td style="text-align: left;">Hunyuan3D 2.0</td>
+<td style="text-align: center;">↓</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5-overall-quality-realism">5. 整体质量与真实感 (Overall Quality &amp; Realism)<a class="headerlink" href="#5-overall-quality-realism" title="Permanent link">&para;</a></h2>
+<p>衡量生成结果的整体质量、真实感和多样性。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">评估内容</th>
+<th style="text-align: left;">使用论文</th>
+<th style="text-align: center;">方向</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>FID (Fréchet Inception Distance)</strong></td>
+<td style="text-align: left;">生成数据分布与真实数据分布的相似性（真实感+多样性）</td>
+<td style="text-align: left;">VoxHammer, MeshPad, TRELLIS, Hunyuan3D 2.0</td>
+<td style="text-align: center;">↓</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>FVD (Fréchet Video Distance)</strong></td>
+<td style="text-align: left;">模型旋转渲染序列的时序连贯性</td>
+<td style="text-align: left;">VoxHammer</td>
+<td style="text-align: center;">↓</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>KD (Kernel Distance)</strong></td>
+<td style="text-align: left;">与 FD 类似，衡量分布距离（通常更稳定）</td>
+<td style="text-align: left;">TRELLIS</td>
+<td style="text-align: center;">↓</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GPTEval3D / User Study (质量)</strong></td>
+<td style="text-align: left;">人类或 GPT-4V 对整体美学、真实感、编辑融合自然度的综合打分</td>
+<td style="text-align: left;">VoxHammer, PrEditor3D, MeshPad</td>
+<td style="text-align: center;">↑</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition info">
+<p class="admonition-title">FD 变体</p>
+<p>Fréchet Distance 有多种变体，取决于特征提取器：</p>
+<ul>
+<li><strong>FID_Incept</strong>: 使用 InceptionV3 特征（经典）</li>
+<li><strong>FID_CLIP</strong>: 使用 CLIP 特征</li>
+<li><strong>FD_dinov2</strong>: 使用 DINOv2 特征（通常更鲁棒）</li>
+<li><strong>FD_point</strong>: 使用 PointNet++ 提取 3D 点云特征（直接评估几何分布）</li>
+</ul>
+</div>
+<hr />
+<h2 id="6-efficiency">6. 效率 (Efficiency)<a class="headerlink" href="#6-efficiency" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">评估内容</th>
+<th style="text-align: left;">使用论文</th>
+<th style="text-align: center;">方向</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Runtime</strong></td>
+<td style="text-align: left;">整个编辑/生成流程所需时间</td>
+<td style="text-align: left;">PrEditor3D, MeshPad</td>
+<td style="text-align: center;">↓</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Tokens/Second (T/s)</strong></td>
+<td style="text-align: left;">每秒生成的 token 数量（自回归方法）</td>
+<td style="text-align: left;">MeshPad</td>
+<td style="text-align: center;">↑</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7">7. 场景级指标<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">评估内容</th>
+<th style="text-align: center;">方向</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>碰撞率 (Penetration %)</strong></td>
+<td style="text-align: left;">场景插入任务中物体是否与场景相交</td>
+<td style="text-align: center;">↓</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="8">8. 参数量与训练算力<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<p>3D 编辑相关模型的参数量和训练开销对比。</p>
+<h3 id="81">8.1 总览<a class="headerlink" href="#81" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">模型</th>
+<th style="text-align: left;">总参数量</th>
+<th style="text-align: left;">训练硬件</th>
+<th style="text-align: left;">训练步数</th>
+<th style="text-align: left;">训练数据量</th>
+<th style="text-align: left;">推理时间</th>
+<th style="text-align: left;">是否需要训练</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>TRELLIS</strong></td>
+<td style="text-align: left;">342M / 1.1B / 2B</td>
+<td style="text-align: left;">64×A100 (40G)</td>
+<td style="text-align: left;">400K</td>
+<td style="text-align: left;">~500K 3D 资产</td>
+<td style="text-align: left;">~10s</td>
+<td style="text-align: left;">完整训练</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>TRELLIS 2</strong></td>
+<td style="text-align: left;">~4B</td>
+<td style="text-align: left;">32×H100 (DiT) / 16×H100 (VAE)</td>
+<td style="text-align: left;">渐进式</td>
+<td style="text-align: left;">~800K 3D 资产</td>
+<td style="text-align: left;">3s–60s (H100)</td>
+<td style="text-align: left;">完整训练</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Native 3D Editing</strong></td>
+<td style="text-align: left;">未报告</td>
+<td style="text-align: left;">A800</td>
+<td style="text-align: left;">150K+80K</td>
+<td style="text-align: left;">未报告</td>
+<td style="text-align: left;">未报告</td>
+<td style="text-align: left;">完整训练</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Steer3D</strong></td>
+<td style="text-align: left;">未报告</td>
+<td style="text-align: left;">6×A100</td>
+<td style="text-align: left;">未报告</td>
+<td style="text-align: left;">~96K 编辑对</td>
+<td style="text-align: left;">前馈式</td>
+<td style="text-align: left;">两阶段训练</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>VoxHammer</strong></td>
+<td style="text-align: left;">0（training-free）</td>
+<td style="text-align: left;">1×A100（推理）</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">~133s</td>
+<td style="text-align: left;">免训练</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Easy3E</strong></td>
+<td style="text-align: left;">仅 Ctrl-Adapter</td>
+<td style="text-align: left;">未报告</td>
+<td style="text-align: left;">未报告</td>
+<td style="text-align: left;">Objaverse 子集</td>
+<td style="text-align: left;">~75s</td>
+<td style="text-align: left;">极轻量训练</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AnchorFlow</strong></td>
+<td style="text-align: left;">0（training-free）</td>
+<td style="text-align: left;">1×H100（推理）</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">~26.71s</td>
+<td style="text-align: left;">免训练</td>
+</tr>
+</tbody>
+</table>
+<h3 id="82-trellis">8.2 TRELLIS 模块参数量<a class="headerlink" href="#82-trellis" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">网络模块</th>
+<th style="text-align: right;">参数量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Sparse Structure VAE Encoder (E_S)</td>
+<td style="text-align: right;">59.3M</td>
+</tr>
+<tr>
+<td style="text-align: left;">Sparse Structure VAE Decoder (D_S)</td>
+<td style="text-align: right;">73.7M</td>
+</tr>
+<tr>
+<td style="text-align: left;">SLAT Encoder (E)</td>
+<td style="text-align: right;">85.8M</td>
+</tr>
+<tr>
+<td style="text-align: left;">SLAT Decoder – 3DGS (D_GS)</td>
+<td style="text-align: right;">85.4M</td>
+</tr>
+<tr>
+<td style="text-align: left;">SLAT Decoder – RF (D_RF)</td>
+<td style="text-align: right;">85.4M</td>
+</tr>
+<tr>
+<td style="text-align: left;">SLAT Decoder – Mesh (D_M)</td>
+<td style="text-align: right;">90.9M</td>
+</tr>
+<tr>
+<td style="text-align: left;">Structure Generator G_S (Basic / Large / XL)</td>
+<td style="text-align: right;">157M / 543M / 975M</td>
+</tr>
+<tr>
+<td style="text-align: left;">Latent Generator G_L (Basic / Large / XL)</td>
+<td style="text-align: right;">185M / 588M / 1073M</td>
+</tr>
+</tbody>
+</table>
+<h3 id="83-trellis-2">8.3 TRELLIS 2 模块参数量<a class="headerlink" href="#83-trellis-2" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">模块</th>
+<th style="text-align: right;">参数量</th>
+<th style="text-align: left;">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">SC-VAE Encoder</td>
+<td style="text-align: right;">354M</td>
+<td style="text-align: left;">空间压缩率 16×</td>
+</tr>
+<tr>
+<td style="text-align: left;">SC-VAE Decoder</td>
+<td style="text-align: right;">474M</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Sparse Structure Generator</td>
+<td style="text-align: right;">~1.3B</td>
+<td style="text-align: left;">DiT: width 1536, 30 blocks</td>
+</tr>
+<tr>
+<td style="text-align: left;">Geometry Generator</td>
+<td style="text-align: right;">~1.3B</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Material Generator</td>
+<td style="text-align: right;">~1.3B</td>
+<td style="text-align: left;">输出完整 PBR</td>
+</tr>
+</tbody>
+</table>
+<h3 id="84">8.4 推理速度对比<a class="headerlink" href="#84" title="Permanent link">&para;</a></h3>
+<h4 id="3d-voxhammer">3D 编辑方法（VoxHammer 基准）<a class="headerlink" href="#3d-voxhammer" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">方法</th>
+<th style="text-align: right;">推理时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Vox-E</td>
+<td style="text-align: right;">32 min</td>
+</tr>
+<tr>
+<td style="text-align: left;">MVEdit</td>
+<td style="text-align: right;">242s</td>
+</tr>
+<tr>
+<td style="text-align: left;">VoxHammer</td>
+<td style="text-align: right;">133s</td>
+</tr>
+<tr>
+<td style="text-align: left;">Tailor3D</td>
+<td style="text-align: right;">83s</td>
+</tr>
+<tr>
+<td style="text-align: left;">Easy3E</td>
+<td style="text-align: right;">75s</td>
+</tr>
+<tr>
+<td style="text-align: left;">AnchorFlow</td>
+<td style="text-align: right;">26.71s</td>
+</tr>
+<tr>
+<td style="text-align: left;">Instant3DiT</td>
+<td style="text-align: right;">20s</td>
+</tr>
+</tbody>
+</table>
+<h4 id="anchorflow-hunyuan3d-21">AnchorFlow 基准（基于 Hunyuan3D 2.1）<a class="headerlink" href="#anchorflow-hunyuan3d-21" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">方法</th>
+<th style="text-align: right;">推理时间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">TextDeformer</td>
+<td style="text-align: right;">2229.75s</td>
+</tr>
+<tr>
+<td style="text-align: left;">MVEdit</td>
+<td style="text-align: right;">513.55s</td>
+</tr>
+<tr>
+<td style="text-align: left;">Editing-by-Inversion</td>
+<td style="text-align: right;">34.86s</td>
+</tr>
+<tr>
+<td style="text-align: left;">Inversion-free Editing (FlowEdit)</td>
+<td style="text-align: right;">25.77s</td>
+</tr>
+<tr>
+<td style="text-align: left;">AnchorFlow</td>
+<td style="text-align: right;">26.71s</td>
+</tr>
+<tr>
+<td style="text-align: left;">Direct Editing (Hunyuan3D 2.1)</td>
+<td style="text-align: right;">21.01s</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_4">论文专用指标组合<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h3 id="voxhammer-edit3d-bench">VoxHammer (Edit3D-Bench)<a class="headerlink" href="#voxhammer-edit3d-bench" title="Permanent link">&para;</a></h3>
+<p>三维度评估体系：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">维度</th>
+<th style="text-align: left;">指标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">未编辑区保留度</td>
+<td style="text-align: left;">Masked CD, Masked PSNR, Masked SSIM, Masked LPIPS</td>
+</tr>
+<tr>
+<td style="text-align: left;">整体 3D 质量</td>
+<td style="text-align: left;">FID, FVD, User Study</td>
+</tr>
+<tr>
+<td style="text-align: left;">条件对齐度</td>
+<td style="text-align: left;">DINO-I, CLIP-T</td>
+</tr>
+</tbody>
+</table>
+<h3 id="preditor3d">PrEditor3D<a class="headerlink" href="#preditor3d" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">类型</th>
+<th style="text-align: left;">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">GPTEval3D</td>
+<td style="text-align: left;">自动评估 (质量)</td>
+<td style="text-align: left;">GPT-4V 比较多视图渲染图</td>
+</tr>
+<tr>
+<td style="text-align: left;">CLIPdir</td>
+<td style="text-align: left;">自动评估 (一致性)</td>
+<td style="text-align: left;">文本变化方向 vs 图像特征变化方向</td>
+</tr>
+<tr>
+<td style="text-align: left;">CLIPdiff-edit / noedit</td>
+<td style="text-align: left;">自动评估 (保真度)</td>
+<td style="text-align: left;">编辑/非编辑区域的 CLIP 分数变化</td>
+</tr>
+<tr>
+<td style="text-align: left;">User Study</td>
+<td style="text-align: left;">人工评估</td>
+<td style="text-align: left;">提示对齐度、视觉质量、形状保持性</td>
+</tr>
+<tr>
+<td style="text-align: left;">CD</td>
+<td style="text-align: left;">消融研究</td>
+<td style="text-align: left;">非编辑区域形状保持</td>
+</tr>
+</tbody>
+</table>
+<h3 id="meshpad">MeshPad<a class="headerlink" href="#meshpad" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">指标</th>
+<th style="text-align: left;">类型</th>
+<th style="text-align: center;">方向</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">CD</td>
+<td style="text-align: left;">几何质量</td>
+<td style="text-align: center;">↓</td>
+</tr>
+<tr>
+<td style="text-align: left;">FID</td>
+<td style="text-align: left;">感知质量</td>
+<td style="text-align: center;">↓</td>
+</tr>
+<tr>
+<td style="text-align: left;">CLIP Score</td>
+<td style="text-align: left;">草图匹配度</td>
+<td style="text-align: center;">↑</td>
+</tr>
+<tr>
+<td style="text-align: left;">LPIPS</td>
+<td style="text-align: left;">草图-模型局部匹配度</td>
+<td style="text-align: center;">↓</td>
+</tr>
+<tr>
+<td style="text-align: left;">T/s</td>
+<td style="text-align: left;">效率</td>
+<td style="text-align: center;">↑</td>
+</tr>
+<tr>
+<td style="text-align: left;">GQ/GM (User Study)</td>
+<td style="text-align: left;">生成质量/匹配度 (1-5)</td>
+<td style="text-align: center;">↑</td>
+</tr>
+<tr>
+<td style="text-align: left;">EQ/EM/EC (User Study)</td>
+<td style="text-align: left;">编辑质量/匹配度/一致性 (1-5)</td>
+<td style="text-align: center;">↑</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+  <h2 id="__comments">评论</h2>
+  </script>
+  <script src="https://giscus.app/client.js"
+          data-repo="3d-knowledge-base/3d_kb"
+          data-repo-id="R_kgDORqaFJQ"
+          data-category-id="DIC_kwDORqaFJc4C4xvZ"
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="bottom"
+          data-theme="light"
+          data-lang="zh-CN"
+          crossorigin="anonymous"
+          async>
+  </script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    // Set palette on initial load
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate"
+        ? "transparent_dark"
+        : "light"
+
+      giscus.setAttribute("data-theme", theme)
+    }
+
+    // Register event handlers after document loaded
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate"
+            ? "transparent_dark"
+            : "light"
+
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="上一页: Evaluation">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                Evaluation
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../benchmarks/" class="md-footer__link md-footer__link--next" aria-label="下一页: Benchmarks">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                Benchmarks
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/3d-knowledge-base" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate", "content.action.edit", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

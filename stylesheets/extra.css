@@ -1,0 +1,76 @@
+/* === 署名行 === */
+.byline {
+  margin-top: -0.6rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--md-default-fg-color--light);
+  letter-spacing: 0.02em;
+}
+.byline strong {
+  color: var(--md-primary-fg-color);
+  font-weight: 600;
+}
+
+/* === Admonition === */
+.md-typeset .admonition,
+.md-typeset details {
+  border-left-width: 4px;
+}
+
+/* === 表格 === */
+.md-typeset table {
+  border-radius: 4px;
+  overflow: hidden;
+}
+.md-typeset table th {
+  background: var(--md-primary-fg-color--light);
+  color: var(--md-primary-bg-color);
+  font-weight: 600;
+}
+.md-typeset table tr:nth-child(2n) {
+  background: var(--md-code-bg-color);
+}
+
+/* === 数学公式 === */
+.md-typeset .MathJax {
+  font-size: 100%;
+}
+
+/* === 引用块 === */
+.md-typeset blockquote {
+  border-left: 4px solid var(--md-primary-fg-color);
+  padding-left: 1rem;
+  font-style: italic;
+  color: var(--md-default-fg-color--light);
+}
+
+/* === 代码块 === */
+.md-typeset pre {
+  border-radius: 4px;
+}
+.md-typeset code {
+  border-radius: 3px;
+  padding: 0.2em 0.4em;
+}
+
+/* === 导航间距 === */
+.md-nav__link {
+  margin-top: 0.3em;
+  margin-bottom: 0.3em;
+}
+
+/* === 暗色模式 === */
+[data-md-color-scheme="slate"] {
+  --md-default-bg-color: #1e2129;
+  --md-default-fg-color: #e8eaed;
+  --md-default-fg-color--light: #9aa0a6;
+  --md-code-bg-color: #2d333b;
+  --md-primary-fg-color--light: #5c6bc0;
+}
+
+/* === 响应式 === */
+@media screen and (max-width: 768px) {
+  .md-header__title {
+    font-size: 0.8rem;
+  }
+}
