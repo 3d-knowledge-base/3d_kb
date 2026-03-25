@@ -117,6 +117,7 @@ nav:
           - BPT: generation/bpt.md
           - FACE: generation/face.md
           - Hi3DGen: generation/hi3dgen.md
+          - LATO: generation/lato.md
       - Paper List: generation/paper-list.md
   - Editing:
       - editing/index.md
