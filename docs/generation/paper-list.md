@@ -54,6 +54,38 @@ TRELLIS 的正式续作。引入 O-Voxel 作为更 native 的结构化 3D 资产
 
 基于 TRELLIS 风格骨干的高保真几何生成方法，在几何细节精度上进一步提升。
 
+### Nautilus (2025.01) → [详情页](nautilus.md)
+
+利用流形 mesh 面间拓扑邻接关系做序列压缩的 locality-aware autoencoder。通过 BFS 邻接遍历和共享顶点/边编码将序列长度大幅缩短，配合双流点云条件模块，将 mesh-native AR 生成规模从 ~1600 面推到 5000 面。ICCV 2025。
+
+### QuadGPT (2025.09) → [详情页](quadgpt.md)
+
+首个端到端四边形 mesh 自回归生成方法。设计统一的 tri/quad 混合拓扑 tokenization，并引入面向拓扑质量的 RL 微调方法 tDPO（基于 DPO），在 quad mesh 生成的几何精度和拓扑质量上建立新基准。ICLR 2026。
+
+### TSSR (2025.10) → [详情页](tssr.md)
+
+用离散扩散模型（而非自回归）做 mesh-native 生成。将生成分为拓扑雕刻（Topology Sculptor）和形状细化（Shape Refiner）两阶段，通过并行去噪实现全局拓扑推理。支持 10,000 面、1024^3 分辨率。
+
+### MeshRipple (2025.12) → [详情页](meshripple.md)
+
+通过 frontier-aware BFS tokenization 将 mesh AR 生成的序列化顺序从空间坐标排序改为拓扑邻接顺序。配合前沿批量扩展和稀疏注意力全局记忆，从根本上解决了 mesh 自回归生成中的表面断裂和拓扑不连贯问题。
+
+### Sparc3D (2025.05) → [详情页](sparc3d.md)
+
+提出 Sparcubes（稀疏可变形 Marching Cubes 表示）和 Sparconv-VAE（纯 3D 稀疏卷积 VAE），构建模态一致的 3D 生成管线。消除 2D-3D 模态转换带来的细节损失，在 1024^3 分辨率下实现高保真重建和生成。
+
+### OctFusion (2024.08) → [详情页](octfusion.md)
+
+八叉树上的隐空间表示和统一多尺度 U-Net 扩散模型。避免 cascaded diffusion 的多模型复杂性，在单张 4090 GPU 上 2.5 秒生成任意分辨率的连续流形 mesh。SGP 2025。
+
+### VAT (2024.12) → [详情页](vat.md)
+
+Variational Tokenizer，通过 in-context transformer 压缩和变分残差量化，实现 250x 压缩比（1MB mesh → 3.9KB, 96% F-score）。多尺度 token 从同一高斯分布的不同子空间分配，构建隐式层级结构，适合 coarse-to-fine 自回归生成。
+
+### PartCrafter (2025.06) → [详情页](partcrafter.md)
+
+首个端到端 part-aware 3D mesh 生成模型。通过 compositional latent space 和层级注意力机制，从单张 RGB 图像同时生成多个语义独立、几何一致的 3D mesh 部件。建立在预训练 3D DiT 之上。
+
 ### Edgerunner (2024.09)
 
 面向 artist-style mesh 的自回归生成方法，技术特点在于压缩 mesh 序列的设计，使得生成的 mesh 更接近手工建模的拓扑质量。

@@ -37,6 +37,7 @@ agents.md
 # Temporary and log files
 tmp/
 temp/
+workspace/
 *.tmp
 *.log
 *.bak

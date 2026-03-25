@@ -4,11 +4,11 @@ comments: true
 
 # Papers
 
-3D 生成、编辑及相关领域文献索引。当前页收录 **67 篇**论文/方法，按研究方向分类，涵盖 mesh 生成中的 3D 隐空间表征主线与 mesh editing 主线的关键文献。
+3D 生成、编辑及相关领域文献索引。当前页收录 **75 篇**论文/方法，按研究方向分类，涵盖 mesh 生成中的 3D 隐空间表征主线与 mesh editing 主线的关键文献。
 
 ---
 
-## Generation (14)
+## Generation (22)
 
 3D 物体生成方法：从文本/图像到 3D 资产。
 
@@ -49,6 +49,22 @@ comments: true
 **ShapeLLM-Omni** (2506) — 原生多模态 LLM，通过 3D VQVAE tokenization 统一 Mesh 理解、生成与编辑。
 
 ![ShapeLLM-Omni](https://zzk-host-1319605683.cos.ap-beijing.myqcloud.com/20251004135739.png)
+
+**Nautilus** (2501) — Locality-aware AE，BFS 邻接遍历 + 共享顶点/边压缩序列，mesh-native AR 生成推到 5000 面 (ICCV 2025)。
+
+**QuadGPT** (2509) — 首个端到端四边形 mesh AR 生成，统一 tri/quad tokenization + tDPO RL 微调 (ICLR 2026)。
+
+**TSSR** (2510) — 离散扩散 mesh-native 生成，拓扑雕刻 + 形状细化两阶段，10,000 面 / 1024^3 分辨率。
+
+**MeshRipple** (2512) — Frontier-aware BFS tokenization + 前沿批量扩展 + sparse-attention global memory，解决 AR mesh 生成的拓扑断裂问题。
+
+**Sparc3D** (2505) — Sparcubes + Sparconv-VAE，纯 3D 稀疏卷积模态一致管线，1024^3 高保真重建。
+
+**OctFusion** (2408) — 八叉树 latent + 统一多尺度 U-Net 扩散，2.5s 生成连续流形 mesh (SGP 2025)。
+
+**VAT** (2412) — Variational Tokenizer，250x 压缩（1MB→3.9KB），多尺度隐式层级，适配 LLM 架构的 3D tokenization。
+
+**PartCrafter** (2506) — 首个 part-aware 3D mesh 生成，compositional latent space + 层级注意力，端到端部件分解。
 
 ---
 
@@ -183,7 +199,15 @@ Mesh 重建、补全与结构化处理。
 - **TRELLIS 2** — O-Voxel：更原生的 structured 3D latent，支持 open surfaces / non-manifold / PBR
 - **LATTICE / VoxSet** — semi-structured latent：强调 `localizable code`
 - **TripoSG / SparseFlex / Direct3D-S2** — 高分辨率 sparse volumetric scaling 路线
+- **OctFusion** — 八叉树 latent + 统一多尺度 U-Net，避免 cascaded diffusion
+- **Sparc3D** — 模态一致的纯 3D 稀疏卷积 VAE，消除 2D-3D 转换损失
+- **VAT** — 极端压缩的 variational tokenizer (250x)，对接 LLM 架构
 - **MeshAnything V2 / BPT / FACE** — mesh-native token 路线，直接把 mesh 本身作为生成对象
+- **Nautilus** — locality-aware tokenization，利用面间拓扑邻接压缩序列，5000 面
+- **MeshRipple** — frontier-aware BFS + sparse-attention global memory，拓扑连贯生成
+- **QuadGPT** — 首个四边形 mesh AR 生成 + tDPO RL 微调
+- **TSSR** — 离散扩散替代 AR，拓扑雕刻 + 形状细化，10,000 面
+- **PartCrafter** — compositional latent space，端到端部件感知 mesh 生成
 
 ### Mesh Editing: method evolution line
 

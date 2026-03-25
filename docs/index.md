@@ -8,7 +8,7 @@ comments: true
 
 # 3D Generation & Editing Knowledge Base
 
-<p class="byline">by <strong>Zhenkui Zhang</strong> · 2025.03</p>
+<p class="byline">by <strong>Zhenkui Zhang</strong> · 2025.03 | 协作：<a href="https://opencode.ai">OpenCode</a></p>
 
 ---
 
@@ -83,3 +83,8 @@ comments: true
     [:octicons-arrow-right-24: All Papers](./papers.md)
 
 </div>
+
+---
+
+!!! info "关于本知识库"
+    本知识库在 [OpenCode](https://opencode.ai) AI 助手辅助下整理完成，系统梳理了 3D 视觉生成与编辑领域的核心文献与技术进展。

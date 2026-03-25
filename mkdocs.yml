@@ -118,6 +118,14 @@ nav:
           - FACE: generation/face.md
           - Hi3DGen: generation/hi3dgen.md
           - LATO: generation/lato.md
+          - Nautilus: generation/nautilus.md
+          - QuadGPT: generation/quadgpt.md
+          - TSSR: generation/tssr.md
+          - MeshRipple: generation/meshripple.md
+          - Sparc3D: generation/sparc3d.md
+          - OctFusion: generation/octfusion.md
+          - VAT: generation/vat.md
+          - PartCrafter: generation/partcrafter.md
       - Paper List: generation/paper-list.md
   - Editing:
       - editing/index.md
